@@ -78,12 +78,11 @@ jobs:
           echo "OpenWrt_name=19.07" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
           echo "ZZZ=package/emortal/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-          echo "CODE=Ctcgfw" >> $GITHUB_ENV
-          echo "ZUOZHE=ctcgfw" >> $GITHUB_ENV
+          echo "CODE=Project" >> $GITHUB_ENV
           echo "OpenWrt_name=18.06" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           echo "ZZZ=package/emortal/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-          echo "CODE=Project" >> $GITHUB_ENV
+          echo "CODE=Spirit" >> $GITHUB_ENV
           echo "OpenWrt_name=21.02" >> $GITHUB_ENV
         fi
         if [ -n "$(ls -A build/common/0602gg 2>/dev/null)" ]; then
@@ -145,12 +144,12 @@ jobs:
           cp -Rf "${Home}"/build/common/LIENOL/diy/* "${Home}"
         elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
           source "${PATH1}/common.sh" && Diy_1806
-          cp -Rf "${Home}"/build/common/CTCGFW/files "${Home}"
-          cp -Rf "${Home}"/build/common/CTCGFW/diy/* "${Home}"
-        elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
-          source "${PATH1}/common.sh" && Diy_2102
           cp -Rf "${Home}"/build/common/PROJECT/files "${Home}"
           cp -Rf "${Home}"/build/common/PROJECT/diy/* "${Home}"
+        elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
+          source "${PATH1}/common.sh" && Diy_2102
+          cp -Rf "${Home}"/build/common/SPIRIT/files "${Home}"
+          cp -Rf "${Home}"/build/common/SPIRIT/diy/* "${Home}"
         fi
         source "${PATH1}/common.sh" && Diy_all
         /bin/bash "${PATH1}/$DIY_PART_SH"
