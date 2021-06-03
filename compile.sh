@@ -172,6 +172,7 @@ echo
 echo
 echo
 sleep 3s
+make defconfig
 make download -j8
 echo -e "$(($(nproc)+1)) thread compile"
 make -j$(($(nproc)+1)) || make -j1 V=s
