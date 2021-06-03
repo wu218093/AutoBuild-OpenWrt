@@ -1,7 +1,7 @@
 #/bin/bash
 echo
 echo
-echo "本脚本仅适用于在Ubuntu环境下编译 https://github.com/garypang13/Actions-OpenWrt"
+echo "本脚本仅适用于在Ubuntu环境下编译"
 echo
 echo
 sleep 2s
@@ -51,7 +51,7 @@ echo "
 
 while :; do
 
-read -p "你想要编译哪个固件？ " CHOOSE
+read -p "你想要编译哪个源码,请选择1-4回车,选择5回车为退出？ " CHOOSE
 
 case $CHOOSE in
 	1)
@@ -77,79 +77,63 @@ esac
 done
 
 if [[ $firmware == "Lede_source" ]]; then
-    REPO_URL="https://github.com/coolsnowwolf/lede"
-    REPO_BRANCH="master"
-		git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
-    git clone --depth 1 -b main https://github.com/281677160/common build/common
+    git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
     
 elif [[ $firmware == "Lienol_source" ]]; then
-    REPO_URL="https://github.com/Lienol/openwrt"
-    REPO_BRANCH="19.07"
     git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
-    git clone --depth 1 -b main https://github.com/281677160/common build/common
     
 elif [[ $firmware == "Project_source" ]]; then
-    REPO_URL="https://github.com/immortalwrt/immortalwrt"
-    REPO_BRANCH="openwrt-18.06"
     git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-    git clone --depth 1 -b main https://github.com/281677160/common build/common
     
 elif [[ $firmware == "Spirit_source" ]]; then
-    REPO_URL="https://github.com/immortalwrt/immortalwrt"
-    REPO_BRANCH="openwrt-21.02"
     git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-    git clone --depth 1 -b main https://github.com/281677160/common build/common
 fi
-
 cp -Rf AutoBuild-OpenWrt/build openwrt/build
+git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/common
 chmod -R +x openwrt/build/common
+chmod -R +x openwrt/build/${firmware}
+source openwrt/build/${firmware}/settings.ini
 rm -rf AutoBuild-OpenWrt
-GITHUB_WORKSPACE=$PWD
-echo "Home=${GITHUB_WORKSPACE}/openwrt"
-echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${firmware}"
-mv -f "${Home}"/build/common/Convert.sh "${Home}"
-mv -f "${Home}"/build/common/*.sh "${PATH1}"
-chmod -R +x "${PATH1}"
-source "${GITHUB_WORKSPACE}/openwrt/build/${firmware}/settings.ini"
+mv -f openwrt/build/common/Convert.sh openwrt
+mv -f openwrt/build/common/*.sh openwrt/build/${firmware}
 cd openwrt
 ./scripts/feeds clean && ./scripts/feeds update -a
-
 if [[ "${REPO_BRANCH}" == "master" ]]; then
-    source "${PATH1}/common.sh" && Diy_lede
-    cp -Rf "${Home}"/build/common/LEDE/files "${Home}"
-    cp -Rf "${Home}"/build/common/LEDE/diy/* "${Home}"
+    source build/${firmware}/common.sh && Diy_lede
+    cp -Rf build/common/LEDE/files ./
+    cp -Rf build/common/LEDE/diy/* ./
 elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
-    source "${PATH1}/common.sh" && Diy_lienol
-    cp -Rf "${Home}"/build/common/LIENOL/files "${Home}"
-    cp -Rf "${Home}"/build/common/LIENOL/diy/* "${Home}"
+    source build/${firmware}/common.sh && Diy_lienol
+    cp -Rf build/common/LIENOL/files ./
+    cp -Rf build/common/LIENOL/diy/* ./
 elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
-    source "${PATH1}/common.sh" && Diy_1806
-    cp -Rf "${Home}"/build/common/PROJECT/files "${Home}"
-    cp -Rf "${Home}"/build/common/PROJECT/diy/* "${Home}"
+    source build/${firmware}/common.sh && Diy_1806
+    cp -Rf build/common/PROJECT/files ./
+    cp -Rf build/common/PROJECT/diy/* ./
 elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
-    source "${PATH1}/common.sh" && Diy_2102
-    cp -Rf "${Home}"/build/common/SPIRIT/files "${Home}"
-    cp -Rf "${Home}"/build/common/SPIRIT/diy/* "${Home}"
+    source build/${firmware}/common.sh && Diy_2102
+    cp -Rf build/common/SPIRIT/files ./
+    cp -Rf build/common/SPIRIT/diy/* ./
 fi
-source "${PATH1}/common.sh" && Diy_all
-/bin/bash "${PATH1}/$DIY_PART_SH"
-if [ -n "$(ls -A "${PATH1}/diy" 2>/dev/null)" ]; then
-    cp -Rf "${PATH1}"/diy/* "${Home}"
+source build/${firmware}/common.sh && Diy_all
+/bin/bash build/${firmware}/$DIY_PART_SH
+if [ -n "$(ls -A build/${firmware}/diy" 2>/dev/null)" ]; then
+    cp -Rf build/${firmware}/diy/* ./
 fi
-if [ -n "$(ls -A "${PATH1}/files" 2>/dev/null)" ]; then
-    cp -Rf "${PATH1}/files" "${Home}" && chmod -R +x ${Home}/files
+if [ -n "$(ls -A build/${firmware}/files 2>/dev/null)" ]; then
+    cp -Rf build/${firmware}/files ./ && chmod -R +x files
 fi
-if [ -n "$(ls -A "${PATH1}/patches" 2>/dev/null)" ]; then
-    find "${PATH1}/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -p1 --forward --no-backup-if-mismatch"
+if [ -n "$(ls -A build/${firmware}/patches 2>/dev/null)" ]; then
+    find build/${firmware}/patches -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -p1 --forward --no-backup-if-mismatch"
 fi
 if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
     /bin/bash ./Convert.sh
 fi
 ./scripts/feeds update -a && ./scripts/feeds install -a
-[ -e "$PATH1/$CONFIG_FILE" ] && mv "$PATH1/$CONFIG_FILE" .config
+[ -e build/${firmware}/$CONFIG_FILE ] && mv build/${firmware}/$CONFIG_FILE .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
     echo "Compile_Date=$(date +%Y%m%d%H%M)" > $GITHUB_WORKSPACE/Openwrt.info
-    source "${PATH1}/upgrade.sh" && Diy_Part1
+    source build/${firmware}/upgrade.sh && Diy_Part1
 fi
 make menuconfig
 make defconfig
@@ -162,9 +146,9 @@ elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
 else
     echo "TARGET_PROFILE=armvirt"
 fi
-source "${PATH1}/common.sh" && Diy_chuli
+source build/${firmware}/common.sh && Diy_chuli
 if [ "${REGULAR_UPDATE}" == "true" ]; then
-    source "${PATH1}/upgrade.sh" && Diy_Part2
+    source build/${firmware}/upgrade.sh && Diy_Part2
 fi
 echo
 echo
@@ -182,7 +166,7 @@ make -j$(($(nproc)+1)) || make -j1 V=s
 
 if [ "$?" == "0" ]; then
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-    source "${PATH1}/upgrade.sh" && Diy_Part3
+    source build/${firmware}/upgrade.sh && Diy_Part3
 fi
 echo "
 编译完成~~~
