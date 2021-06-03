@@ -69,9 +69,7 @@ if [[ "${Ubuntu_kj}" -lt "80" ]];then
 		;;
 		[Nn]) 
 			echo ""
-			TIME  "取消编译,请清理Ubuntu空间..."
-			sleep 2s
-			exit 0
+			TIME r  "取消编译,请清理Ubuntu空间..."
 		;;
 	esac
 fi
