@@ -127,7 +127,7 @@ elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
     cp -Rf build/common/SPIRIT/diy/* ./
 fi
 source build/$firmware/common.sh && Diy_all
-if [ -n "$(ls -A build/$firmware/diy" 2>/dev/null)" ]; then
+if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
     cp -Rf build/$firmware/diy/* ./
 fi
 if [ -n "$(ls -A "build/$firmware/files" 2>/dev/null)" ]; then
