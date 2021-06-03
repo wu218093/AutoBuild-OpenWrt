@@ -68,7 +68,7 @@ echo "
 
 while :; do
 
-read -p "你想要编译哪个源码,请选择1-4回车,选择5回车为退出？ " CHOOSE
+read -p "你想要编译哪个源码？请选择1-4回车,选择5回车为退出！ " CHOOSE
 
 case $CHOOSE in
 	1)
