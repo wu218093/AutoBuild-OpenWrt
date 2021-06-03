@@ -66,7 +66,6 @@ if [[ "${Ubuntu_kj}" -lt "80" ]];then
 	case ${YN:-N} in
 		[Yy])
 			echo ""
-			TIME y "继续编译固件中..."
 		;;
 		[Nn]) 
 			echo ""
