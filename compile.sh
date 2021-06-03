@@ -4,12 +4,12 @@ TIME() {
 	echo -ne " "
 } || {
      case $1 in
-	r) export Color="\e[31m";;
-	g) export Color="\e[32m";;
-	b) export Color="\e[34m";;
-	y) export Color="\e[33m";;
-	z) export Color="\e[35m";;
-	l) export Color="\e[36m";;
+	r) export Color="\e[31;1m";;
+	g) export Color="\e[32;1m";;
+	b) export Color="\e[34;1m";;
+	y) export Color="\e[33;1m";;
+	z) export Color="\e[35;1m";;
+	l) export Color="\e[36;1m";;
       esac
 	[[ $# -lt 2 ]] && echo -e "\e[36m\e[0m ${1}" || {
 		echo -e "\e[36m\e[0m ${Color}${2}\e[0m"
@@ -33,13 +33,13 @@ clear
 echo
 echo 
 echo 
-echo "|*******************************************|"
-echo "|                                           |"
-echo "|                                           |"
-echo "|           基本环境部署完成......          |"
-echo "|                                           |"
-echo "|                                           |"
-echo "|*******************************************|"
+TIME y "|*******************************************|"
+TIME y "|                                           |"
+TIME y "|                                           |"
+TIME y "|           基本环境部署完成......          |"
+TIME y "|                                           |"
+TIME y "|                                           |"
+TIME y "|*******************************************|"
 echo
 echo
 
@@ -87,7 +87,7 @@ case $CHOOSE in
 		firmware="Spirit_source"
 	break
 	;;
-	9)	exit 0
+	5)	exit 0
 	;;
 
 esac
@@ -95,7 +95,7 @@ done
 
 read -p "请输入您的github地址: " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
-echo "您的Github地址为: $Github"
+TIME g "您的Github地址为: $Github"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
