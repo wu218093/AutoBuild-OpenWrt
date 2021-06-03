@@ -1,7 +1,24 @@
 #/bin/bash
+TIME() {
+[[ -z "$1" ]] && {
+	echo -ne " "
+} || {
+     case $1 in
+	r) export Color="\e[31m";;
+	g) export Color="\e[32m";;
+	b) export Color="\e[34m";;
+	y) export Color="\e[33m";;
+	z) export Color="\e[35m";;
+	l) export Color="\e[36m";;
+      esac
+	[[ $# -lt 2 ]] && echo -e "\e[36m\e[0m ${1}" || {
+		echo -e "\e[36m\e[0m ${Color}${2}\e[0m"
+	 }
+      }
+}
 echo
 echo
-echo "本脚本仅适用于在Ubuntu环境下编译"
+TIME r "本脚本仅适用于在Ubuntu环境下编译"
 echo
 echo
 sleep 2s
@@ -85,15 +102,19 @@ CangKu="${Apidz##*/}"
 
 if [[ $firmware == "Lede_source" ]]; then
           git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
+	  ZZZ="package/lean/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
 elif [[ $firmware == "Lienol_source" ]]; then
           git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
+	  ZZZ="package/default-settings/files/zzz-default-settings"
           OpenWrt_name="19.07"
 elif [[ $firmware == "Project_source" ]]; then
           git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
+	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
+	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="21.02"
 fi
 
@@ -161,12 +182,9 @@ elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
 else
           TARGET_PROFILE="armvirt"
 fi
-source build/$firmware/common.sh && Diy_chuli
 if [ "${REGULAR_UPDATE}" == "true" ]; then
           source build/$firmware/upgrade.sh && Diy_Part2
 fi
-source build/$firmware/upgrade.sh
-source build/$firmware/common.sh && Diy_xinxi
 echo
 echo
 echo
