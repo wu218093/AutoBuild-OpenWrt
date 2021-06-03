@@ -44,8 +44,6 @@ TIME z "|                                           |"
 TIME z "|                                           |"
 TIME z "|*******************************************|"
 echo
-echo
-
 
 if [ "$USER" == "root" ]; then
 	echo
@@ -54,24 +52,30 @@ if [ "$USER" == "root" ]; then
 	sleep 3s
 	exit 0
 fi
+
+echo
 df -h
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
 Ubuntu_kj="${Ubuntu_lv%?}"
+TIME g "您当前系统可用空间为${Ubuntu_kj}G"
+echo
 if [[ "${Ubuntu_kj}" -lt "80" ]];then
-	TIME && read -p "是否增删插件? [y/N]: " YN
+	TIME && read -p "可用空间小于30G编译容易出错,是否继续? [y/N]: " YN
 	case ${YN:-N} in
 		[Yy])
 			echo ""
+			TIME y "继续编译固件中..."
 			break
 		;;
 		[Nn]) 
 			echo ""
-			TIME y "取消增删插件,继续编译固件..."
+			TIME y "取消编译,请清理Ubuntu空间..."
+			sleep 2s
 			exit 0
 		;;
 	esac
 fi
-
+echo
 rm -Rf openwrt
 
 TIME g "1. Lede_source"
