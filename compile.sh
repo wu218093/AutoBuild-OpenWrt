@@ -189,14 +189,21 @@ if [[ "${REGULAR_UPDATE}" == "true" ]]; then
 fi
 echo
 echo
-TIME && read -p "是否增删插件?[Y/n]:" Choose
-[[ "${Choose}" == Y ]] || [[ "${Choose}" == y ]] && {
-          make menuconfig
-	  make defconfig
-} || {
-          echo
-	  make defconfig
-          TIME g "已取消增删插件,继续编译固件..."
+[ firmware == "other" ] || {
+while true; do
+TIME read -p "是否增删插件? [y/N]: " YN
+case ${YN:-N} in
+	[Yy])
+		make menuconfig
+		make defconfig
+	echo ""
+	;;
+	[Nn]) 
+	make defconfig
+		break
+	;;
+esac
+done
 }
 echo
 echo
