@@ -72,7 +72,7 @@ TIME z "
 
 while :; do
 
-read -p "你想要编译哪个源码？请选择1-4回车,选择5回车为退出！ " CHOOSE
+TIME && read -p "你想要编译哪个源码？请选择1-4回车,选择5回车为退出！ " CHOOSE
 
 case $CHOOSE in
 	1)
@@ -97,7 +97,7 @@ case $CHOOSE in
 esac
 done
 
-read -p "请输入您的github地址: " Github
+TIME && read -p "请输入您的github地址: " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 TIME g "您的Github地址为: $Github"
 Apidz="${Github##*com/}"
@@ -175,7 +175,12 @@ if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 	  source build/$firmware/upgrade.sh && Diy_Part1
 fi
-make menuconfig
+TIME && read -p "是否增删插件?[Y/n]:" Choose
+[[ "${Choose}" == Y ]] || [[ "${Choose}" == y ]] && {
+          make menuconfig
+} || {
+          TIME r "已取消增删插件..."
+}
 make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
