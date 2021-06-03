@@ -104,7 +104,7 @@ echo
 TIME && read -p "请输入您的github地址: " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
-TIME g "您的Github地址为: $Github"
+TIME y "您的Github地址为: $Github"
 echo
 echo
 echo
