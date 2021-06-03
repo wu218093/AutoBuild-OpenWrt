@@ -119,19 +119,19 @@ CangKu="${Apidz##*/}"
 
 if [[ $firmware == "Lede_source" ]]; then
           git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
-	  ZZZ="package/lean/default-settings/files/zzz-default-settings"
+	  ZZZ=package/lean/default-settings/files/zzz-default-settings
           OpenWrt_name="18.06"
 elif [[ $firmware == "Lienol_source" ]]; then
           git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
-	  ZZZ="package/default-settings/files/zzz-default-settings"
+	  ZZZ=package/default-settings/files/zzz-default-settings
           OpenWrt_name="19.07"
 elif [[ $firmware == "Project_source" ]]; then
           git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
+	  ZZZ=package/emortal/default-settings/files/zzz-default-settings
           OpenWrt_name="18.06"
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
+	  ZZZ=package/emortal/default-settings/files/zzz-default-settings
           OpenWrt_name="21.02"
 fi
 
