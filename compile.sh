@@ -70,6 +70,9 @@ if [[ "${Ubuntu_kj}" -lt "80" ]];then
 		[Nn]) 
 			echo ""
 			TIME r  "取消编译,请清理Ubuntu空间..."
+			rm -rf AutoBuild-OpenWrt
+			sleep 3s
+			exit 0
 		;;
 	esac
 fi
