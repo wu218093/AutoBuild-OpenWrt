@@ -186,7 +186,6 @@ echo >> .config
 cat build/$firmware/.config >> .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
-	  source build/$firmware/upgrade.sh && Diy_Part1
 fi
 make menuconfig
 make defconfig
@@ -204,13 +203,11 @@ if [ "${REGULAR_UPDATE}" == "true" ]; then
 fi
 echo
 echo
-echo
 TIME r "*****15秒后开始编译*****"
 echo
 TIME g "你可以随时按Ctrl+C停止编译"
 echo
 TIME y "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
-echo
 echo
 echo
 sleep 3s
