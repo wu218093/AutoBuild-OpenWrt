@@ -211,8 +211,8 @@ echo
 echo
 sleep 3s
 
-make -j$(($(nproc)+1)) download -j$(($(nproc)+1)) &
-make -j$(($(nproc)+1)) || make -j1 V=s
+make -j8 download V=s
+make -j1 V=s
 
 if [ "$?" == "0" ]; then
 echo "
