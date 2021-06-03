@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
-#
+ZZZ="package/lean/default-settings/files/zzz-default-settings"
 # DIY扩展二合一了，在此处可以增加插件
 #
 
