@@ -143,9 +143,10 @@ fi
 ./scripts/feeds update -a && ./scripts/feeds install -a
 cp build/$firmware/.config .config
 echo >> .config
+cat build/$firmware/.config >> .config
+make menuconfig
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
-          source build/$firmware/upgrade.sh && Diy_Part1
 fi
 make menuconfig
 make defconfig
