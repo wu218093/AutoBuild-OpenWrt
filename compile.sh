@@ -111,22 +111,22 @@ echo
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
-
+TIME g "正在下载源码中,请耐心等候~~~"
 if [[ $firmware == "Lede_source" ]]; then
           git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
-	  ZZZ="${package/lean/default-settings/files/zzz-default-settings}"
+	  ZZZ="$package/lean/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
 elif [[ $firmware == "Lienol_source" ]]; then
           git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
-	  ZZZ="${package/default-settings/files/zzz-default-settings}"
+	  ZZZ="$package/default-settings/files/zzz-default-settings"
           OpenWrt_name="19.07"
 elif [[ $firmware == "Project_source" ]]; then
           git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-	  ZZZ="${package/emortal/default-settings/files/zzz-default-settings}"
+	  ZZZ="$package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-	  ZZZ="${package/emortal/default-settings/files/zzz-default-settings}"
+	  ZZZ="$package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="21.02"
 fi
 
@@ -142,6 +142,7 @@ PATH1="$PWD/openwrt/build/${firmware}"
 rm -rf AutoBuild-OpenWrt
 mv -f openwrt/build/common/Convert.sh openwrt
 mv -f openwrt/build/common/*.sh openwrt/build/${firmware}
+TIME g "正在加载自定义文件,请耐心等候~~~"
 cd openwrt
 ./scripts/feeds clean && ./scripts/feeds update -a
 if [[ "${REPO_BRANCH}" == "master" ]]; then
@@ -174,6 +175,7 @@ fi
 if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
           /bin/bash ./Convert.sh
 fi
+TIME g "正在加载源和安装源,请耐心等候~~~"
 /bin/bash build/$firmware/$DIY_PART_SH
 ./scripts/feeds update -a && ./scripts/feeds install -a
 [ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
