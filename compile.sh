@@ -31,14 +31,11 @@ sleep 2s
 
 sudo apt-get update -y
 sudo apt-get full-upgrade -y
-sudo apt-get install -y build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libreadline-dev libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint ccache curl wget vim nano python python3 python-pip python3-pip python-ply python3-ply haveged lrzsz device-tree-compiler scons antlr3 gperf intltool rsync
+sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync
 
-sudo bash -c "bash <(curl -s https://build-scripts.project-openwrt.eu.org/init_build_environment.sh)"
-
-clear 
+clear
 echo
-echo 
-echo 
+echo
 TIME g "|*******************************************|"
 TIME z "|                                           |"
 TIME z "|                                           |"
@@ -100,12 +97,10 @@ esac
 done
 echo
 echo
-echo
 TIME && read -p "请输入您的github地址: " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
 TIME y "您的Github地址为: $Github"
-echo
 echo
 echo
 Apidz="${Github##*com/}"
