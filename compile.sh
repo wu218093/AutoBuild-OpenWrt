@@ -126,24 +126,24 @@ elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
     cp -Rf build/common/SPIRIT/files ./
     cp -Rf build/common/SPIRIT/diy/* ./
 fi
-source build/${firmware}/common.sh && Diy_all
-if [ -n "$(ls -A build/${firmware}/diy" 2>/dev/null)" ]; then
-    cp -Rf build/${firmware}/diy/* ./
+source build/$firmware/common.sh && Diy_all
+if [ -n "$(ls -A build/$firmware/diy" 2>/dev/null)" ]; then
+    cp -Rf build/$firmware/diy/* ./
 fi
-if [ -n "$(ls -A build/${firmware}/files 2>/dev/null)" ]; then
-    cp -Rf build/${firmware}/files ./ && chmod -R +x files
+if [ -n "$(ls -A "build/$firmware/files" 2>/dev/null)" ]; then
+    cp -Rf build/$firmware/files ./ && chmod -R +x files
 fi
-if [ -n "$(ls -A build/${firmware}/patches 2>/dev/null)" ]; then
-    find build/${firmware}/patches -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -p1 --forward --no-backup-if-mismatch"
+if [ -n "$(ls -A "build/$firmware/patches" 2>/dev/null)" ]; then
+          find "build/$firmware/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -p1 --forward"
 fi
 if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
     /bin/bash ./Convert.sh
 fi
 ./scripts/feeds update -a && ./scripts/feeds install -a
-[ -e build/${firmware}/$CONFIG_FILE ] && mv build/${firmware}/$CONFIG_FILE .config
+[ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
     echo "Compile_Date=$(date +%Y%m%d%H%M)" > $GITHUB_WORKSPACE/Openwrt.info
-    source build/${firmware}/upgrade.sh && Diy_Part1
+    source build/$firmware/upgrade.sh && Diy_Part1
 fi
 make menuconfig
 make defconfig
@@ -156,9 +156,9 @@ elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
 else
     echo "TARGET_PROFILE=armvirt"
 fi
-source build/${firmware}/common.sh && Diy_chuli
+source build/$firmware/common.sh && Diy_chuli
 if [ "${REGULAR_UPDATE}" == "true" ]; then
-    source build/${firmware}/upgrade.sh && Diy_Part2
+    source build/$firmware/upgrade.sh && Diy_Part2
 fi
 echo
 echo
