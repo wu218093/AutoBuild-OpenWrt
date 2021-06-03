@@ -245,12 +245,11 @@ echo
 echo
 sleep 8s
 TIME g "正在下载插件包"
-make download -j8
+make -j8 download V=s
 echo
 TIME g "开始编译固件,时间有点长,请耐心等待..."
 echo
-echo -e "$(($(nproc)+1)) thread compile"
-make -j$(($(nproc)+1)) || make -j1 V=s
+make -j1 V=s
 
 if [ "$?" == "0" ]; then
 TIME y "
