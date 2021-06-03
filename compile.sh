@@ -141,6 +141,7 @@ fi
 if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
           /bin/bash ./Convert.sh
 fi
+/bin/bash build/$firmware/$DIY_PART_SH
 ./scripts/feeds update -a && ./scripts/feeds install -a
 cp build/$firmware/.config .config
 echo >> .config
@@ -160,13 +161,16 @@ elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
 else
           TARGET_PROFILE="armvirt"
 fi
+source build/$firmware/common.sh && Diy_chuli
 if [ "${REGULAR_UPDATE}" == "true" ]; then
           source build/$firmware/upgrade.sh && Diy_Part2
 fi
+source build/$firmware/upgrade.sh
+source build/$firmware/common.sh && Diy_xinxi
 echo
 echo
 echo
-echo "                      *****5秒后开始编译*****
+echo "                      *****15秒后开始编译*****
 1.你可以随时按Ctrl+C停止编译
 3.大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
 echo
