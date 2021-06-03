@@ -18,7 +18,11 @@ TIME() {
 }
 echo
 echo
-TIME r "本脚本仅适用于在Ubuntu环境下编译"
+TIME r "|*******************************************|"
+TIME r "|                                           |"
+TIME r "|  	本脚本仅适用于在Ubuntu环境下编译      |"
+TIME r "|                                           |"
+TIME r "|*******************************************|"
 echo
 echo
 sleep 2s
@@ -47,7 +51,7 @@ echo
 if [ "$USER" == "root" ]; then
 	echo
 	echo
-	echo "请勿使用root用户编译，换一个普通用户吧~~"
+	TIME g "请勿使用root用户编译，换一个普通用户吧~~"
 	sleep 3s
 	exit 0
 fi
@@ -58,7 +62,7 @@ fi
 
 rm -Rf openwrt
 
-echo "
+TIME z "
 1. Lede_source
 2. Lienol_source
 3. Project_source
@@ -188,9 +192,9 @@ fi
 echo
 echo
 echo
-echo "                      *****15秒后开始编译*****
-1.你可以随时按Ctrl+C停止编译
-3.大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
+TIME y "*****15秒后开始编译*****"
+TIME g "你可以随时按Ctrl+C停止编译"
+TIME g "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
 echo
 echo
 echo
