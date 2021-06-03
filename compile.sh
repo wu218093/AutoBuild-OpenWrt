@@ -188,7 +188,6 @@ if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 fi
 make menuconfig
-make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
           [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
