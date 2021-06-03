@@ -78,22 +78,23 @@ done
 
 read -p "请输入您的github地址: " Github
 Github=${Github:-"https://github.com/coolsnowwolf/lede"}
-echo "您的后台地址为: $Github"
+echo "您的Github地址为: $Github"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
-Cangku="${Github##*${Author}/}"
+CangKu="${Apidz##*/}"
 
 if [[ $firmware == "Lede_source" ]]; then
           git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
-    
+          OpenWrt_name="18.06"
 elif [[ $firmware == "Lienol_source" ]]; then
           git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
-    
+          OpenWrt_name="19.07"
 elif [[ $firmware == "Project_source" ]]; then
           git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-    
+          OpenWrt_name="18.06"
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
+          OpenWrt_name="21.02"
 fi
 
 cp -Rf AutoBuild-OpenWrt/build openwrt/build
@@ -176,11 +177,11 @@ make download -j8
 echo -e "$(($(nproc)+1)) thread compile"
 make -j$(($(nproc)+1)) || make -j1 V=s
 if [ "$?" == "0" ]; then
-if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-    source build/${firmware}/upgrade.sh && Diy_Part3
-fi
 echo "
 编译完成~~~
 初始用户名密码: root  root
 "
+fi
+if [[ "${REGULAR_UPDATE}" == "true" ]]; then
+    source build/${firmware}/upgrade.sh && Diy_Part3
 fi
