@@ -78,7 +78,7 @@ done
 
 read -p "请输入您的github地址: " Github
 Github=${Github:-"https://github.com/coolsnowwolf/lede"}
-echo "您的后台地址为: $ip"
+echo "您的后台地址为: $Github"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 Cangku="${Github##*${Author}/}"
