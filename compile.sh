@@ -58,23 +58,18 @@ if [ "$USER" == "root" ]; then
 	exit 0
 fi
 
-
-
-
-
 rm -Rf openwrt
 
-
 TIME g "1. Lede_source"
-	
+echo
 TIME z "2. Lienol_source"
-	
-TIME y "3. Project_source"
-	
-TIME g "4. Spirit_source"
-	
+echo
+TIME g "3. Project_source"
+echo
+TIME y "4. Spirit_source"
+echo
 TIME r "5. Exit"
-
+echo
 echo
 
 while :; do
