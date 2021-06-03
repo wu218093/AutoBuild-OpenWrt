@@ -223,9 +223,10 @@ echo
 echo
 echo
 sleep 3s
-make download -j8
-echo -e "$(($(nproc)+1)) thread compile"
+
+make -j$(($(nproc)+1)) download -j$(($(nproc)+1)) &
 make -j$(($(nproc)+1)) || make -j1 V=s
+
 if [ "$?" == "0" ]; then
 echo "
 编译完成~~~
