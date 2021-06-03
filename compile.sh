@@ -95,6 +95,7 @@ elif [[ $firmware == "Project_source" ]]; then
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
 fi
+
 cp -Rf AutoBuild-OpenWrt/build openwrt/build
 git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/common
 chmod -R +x openwrt/build/common
@@ -140,11 +141,10 @@ if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
           /bin/bash ./Convert.sh
 fi
 ./scripts/feeds update -a && ./scripts/feeds install -a
-[ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
+cp build/$firmware/.config .config
+echo >> .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-          cd ../
-          echo "Compile_Date=$(date +%Y%m%d%H%M)" > $GITHUB_WORKSPACE/Openwrt.info
-	  cd openwrt
+          echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
           source build/$firmware/upgrade.sh && Diy_Part1
 fi
 make menuconfig
