@@ -192,13 +192,14 @@ echo
 TIME && read -p "是否增删插件?[Y/n]:" Choose
 [[ "${Choose}" == Y ]] || [[ "${Choose}" == y ]] && {
           make menuconfig
+	  make defconfig
 } || {
           echo
+	  make defconfig
           TIME g "已取消增删插件,继续编译固件..."
 }
 echo
 echo
-make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
           [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
@@ -211,6 +212,7 @@ fi
 if [ "${REGULAR_UPDATE}" == "true" ]; then
           source build/$firmware/upgrade.sh && Diy_Part2
 fi
+make defconfig
 echo
 echo
 echo
