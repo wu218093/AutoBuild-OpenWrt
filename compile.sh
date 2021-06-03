@@ -18,11 +18,13 @@ TIME() {
 }
 echo
 echo
-TIME r "|*******************************************|"
-TIME r "|                                           |"
-TIME r "|  	本脚本仅适用于在Ubuntu环境下编译      |"
-TIME r "|                                           |"
-TIME r "|*******************************************|"
+TIME g "|*******************************************|"
+TIME g "|                                           |"
+TIME r "|       本脚本仅适用于在Ubuntu环境下编译      |"
+TIME g "|                                           |"
+TIME y "|      首次编译,请输入Ubuntu密码继续下一步    |"
+TIME g "|                                           |"
+TIME g "|*******************************************|"
 echo
 echo
 sleep 2s
@@ -37,13 +39,13 @@ clear
 echo
 echo 
 echo 
-TIME y "|*******************************************|"
-TIME y "|                                           |"
-TIME y "|                                           |"
+TIME z "|*******************************************|"
+TIME z "|                                           |"
+TIME z "|                                           |"
 TIME y "|           基本环境部署完成......          |"
-TIME y "|                                           |"
-TIME y "|                                           |"
-TIME y "|*******************************************|"
+TIME z "|                                           |"
+TIME z "|                                           |"
+TIME z "|*******************************************|"
 echo
 echo
 
@@ -62,12 +64,12 @@ fi
 
 rm -Rf openwrt
 
-TIME z "
-1. Lede_source
-2. Lienol_source
-3. Project_source
-4. Spirit_source
-5. Exit
+TIME g "
+	1. Lede_source
+	2. Lienol_source
+	3. Project_source
+	4. Spirit_source
+	5. Exit
 "
 
 while :; do
@@ -96,10 +98,15 @@ case $CHOOSE in
 
 esac
 done
-
+echo
+echo
+echo
 TIME && read -p "请输入您的github地址: " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 TIME g "您的Github地址为: $Github"
+echo
+echo
+echo
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
@@ -175,12 +182,18 @@ if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 	  source build/$firmware/upgrade.sh && Diy_Part1
 fi
+echo
+echo
+echo
 TIME && read -p "是否增删插件?[Y/n]:" Choose
 [[ "${Choose}" == Y ]] || [[ "${Choose}" == y ]] && {
           make menuconfig
 } || {
-          TIME r "已取消增删插件..."
+          TIME g "已取消增删插件..."
 }
+echo
+echo
+echo
 make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
@@ -198,8 +211,8 @@ echo
 echo
 echo
 TIME y "*****15秒后开始编译*****"
-TIME g "你可以随时按Ctrl+C停止编译"
-TIME g "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
+TIME b "你可以随时按Ctrl+C停止编译"
+TIME l "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
 echo
 echo
 echo
