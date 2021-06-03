@@ -55,6 +55,8 @@ fi
 
 echo
 df -h
+echo
+echo
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
 Ubuntu_kj="${Ubuntu_lv%?}"
 TIME g "您当前系统可用空间为${Ubuntu_kj}G"
@@ -65,7 +67,6 @@ if [[ "${Ubuntu_kj}" -lt "80" ]];then
 		[Yy])
 			echo ""
 			TIME y "继续编译固件中..."
-			break
 		;;
 		[Nn]) 
 			echo ""
@@ -75,6 +76,8 @@ if [[ "${Ubuntu_kj}" -lt "80" ]];then
 		;;
 	esac
 fi
+echo
+echo
 echo
 rm -Rf openwrt
 
