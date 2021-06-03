@@ -148,6 +148,7 @@ if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source build/$firmware/upgrade.sh && Diy_Part1
 fi
 make menuconfig
+make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
           [ -s DEVICE_NAME ] && echo "TARGET_PROFILE=$(cat DEVICE_NAME)"
@@ -170,7 +171,6 @@ echo
 echo
 echo
 sleep 3s
-
 make -j$(($(nproc)+1)) download -j$(($(nproc)+1)) &
 make -j$(($(nproc)+1)) || make -j1 V=s
 
