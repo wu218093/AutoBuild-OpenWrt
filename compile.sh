@@ -246,6 +246,7 @@ echo
 sleep 8s
 TIME g "正在下载插件包"
 make -j8 download V=s
+make -j8 download
 echo
 TIME g "开始编译固件,时间有点长,请耐心等待..."
 echo
