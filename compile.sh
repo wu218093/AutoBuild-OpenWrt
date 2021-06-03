@@ -54,6 +54,18 @@ if [ "$USER" == "root" ]; then
 	sleep 3s
 	exit 0
 fi
+df -h
+Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
+if [[ "${Ubuntu_lv}" -lt "60G" ]];then
+	TIME && read -p "当前系统空间小于30G,编译容易出错,是否还继续?[Y/n]:" Choose
+		[[ "${Choose}" == Y ]] || [[ "${Choose}" == y ]] && {
+		TIME b "正在开始重新安装固件..."
+	} || {
+		TIME r "已取消重新安装固件,即将退出程序..."
+		sleep 2
+		exit 0
+	}
+fi
 
 rm -Rf openwrt
 
