@@ -20,9 +20,9 @@ echo
 echo
 TIME z "|*******************************************|"
 TIME g "|                                           |"
-TIME r "|      本脚本仅适用于在Ubuntu环境下编译     |"
+TIME r "|     本脚本仅适用于在Ubuntu环境下编译      |"
 TIME g "|                                           |"
-TIME y "|     首次编译,请输入Ubuntu密码继续下一步   |"
+TIME y "|    首次编译,请输入Ubuntu密码继续下一步    |"
 TIME g "|                                           |"
 TIME g "|*******************************************|"
 echo
@@ -64,17 +64,18 @@ fi
 
 rm -Rf openwrt
 
-TIME z "
-	1. Lede_source
+
+TIME g "1. Lede_source"
 	
-	2. Lienol_source
+TIME z "2. Lienol_source"
 	
-	3. Project_source
+TIME y "3. Project_source"
 	
-	4. Spirit_source
+TIME g "4. Spirit_source"
 	
-	5. Exit
-"
+TIME r "5. Exit"
+
+echo
 
 while :; do
 
@@ -191,7 +192,7 @@ echo
 echo
 [ firmware == "other" ] || {
 while true; do
-TIME read -p "是否增删插件? [y/N]: " YN
+read -p "是否增删插件? [y/N]: " YN
 case ${YN:-N} in
 	[Yy])
 		make menuconfig
@@ -219,7 +220,6 @@ fi
 if [ "${REGULAR_UPDATE}" == "true" ]; then
           source build/$firmware/upgrade.sh && Diy_Part2
 fi
-make defconfig
 echo
 echo
 echo
