@@ -93,6 +93,10 @@ git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/co
 chmod -R +x openwrt/build/common
 chmod -R +x openwrt/build/${firmware}
 source openwrt/build/${firmware}/settings.ini
+
+Home="$PWD/openwrt"
+PATH1="$PWD/openwrt/build/${firmware}"
+
 rm -rf AutoBuild-OpenWrt
 mv -f openwrt/build/common/Convert.sh openwrt
 mv -f openwrt/build/common/*.sh openwrt/build/${firmware}
