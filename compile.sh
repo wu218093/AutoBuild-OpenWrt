@@ -57,7 +57,7 @@ fi
 df -h
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
 Ubuntu_kj="${Ubuntu_lv%?}"
-if [[ "30" -lt "${Ubuntu_kj}" ]];then
+if [[ "${Ubuntu_kj}" -lt "80" ]];then
 	TIME && read -p "是否增删插件? [y/N]: " YN
 	case ${YN:-N} in
 		[Yy])
