@@ -62,7 +62,7 @@ Ubuntu_kj="${Ubuntu_lv%?}"
 TIME g "您当前系统可用空间为${Ubuntu_kj}G"
 echo
 if [[ "${Ubuntu_kj}" -lt "80" ]];then
-	TIME && read -p "可用空间小于30G编译容易出错,是否继续? [y/N]: " YN
+	TIME && read -p "可用空间小于 30G 编译容易出错,是否继续? [y/N]: " YN
 	case ${YN:-N} in
 		[Yy])
 			echo ""
