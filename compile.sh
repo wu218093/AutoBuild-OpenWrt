@@ -187,7 +187,24 @@ cat build/$firmware/.config >> .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 fi
-make menuconfig
+echo
+echo
+while :; do
+TIME && read -p "是否增删插件? [y/N]: " YN
+case ${YN:-N} in
+	[Yy])
+		make menuconfig
+	echo ""
+	;;
+	[Nn]) 
+	TIME g "取消增删插件,继续编译固件..."
+		break
+	;;
+esac
+done
+echo
+echo
+make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
           [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
@@ -211,11 +228,12 @@ echo
 echo
 sleep 3s
 
-make -j8 download V=s
-make -j1 V=s
+make download -j8
+echo -e "$(($(nproc)+1)) thread compile"
+make -j$(($(nproc)+1)) || make -j1 V=s
 
 if [ "$?" == "0" ]; then
-echo "
+TIME y "
 编译完成~~~
 初始用户名密码: root  root
 "
