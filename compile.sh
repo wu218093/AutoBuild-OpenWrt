@@ -76,6 +76,13 @@ case $CHOOSE in
 esac
 done
 
+read -p "请输入您的github地址: " Github
+Github=${Github:-"https://github.com/coolsnowwolf/lede"}
+echo "您的后台地址为: $ip"
+Apidz="${Github##*com/}"
+Author="${Apidz%/*}"
+Cangku="${Github##*${Author}/}"
+
 if [[ $firmware == "Lede_source" ]]; then
     git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
     
@@ -120,7 +127,7 @@ elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
     cp -Rf build/common/SPIRIT/diy/* ./
 fi
 source build/${firmware}/common.sh && Diy_all
-/bin/bash build/${firmware}/$DIY_PART_SH
+bash build/${firmware}/$DIY_PART_SH
 if [ -n "$(ls -A build/${firmware}/diy" 2>/dev/null)" ]; then
     cp -Rf build/${firmware}/diy/* ./
 fi
