@@ -83,11 +83,11 @@ rm -Rf openwrt
 
 TIME g "1. Lede_source"
 echo
-TIME z "2. Lienol_source"
+TIME g "2. Lienol_source"
 echo
 TIME g "3. Project_source"
 echo
-TIME y "4. Spirit_source"
+TIME g "4. Spirit_source"
 echo
 TIME r "5. Exit"
 echo
@@ -95,7 +95,7 @@ echo
 
 while :; do
 
-TIME && read -p "你想要编译哪个源码？请在1-4选择回车,选择5回车为退出！ " CHOOSE
+TIME && read -p "请选择源码？输入1-4选择然后回车,选择5回车为退出！ " CHOOSE
 
 case $CHOOSE in
 	1)
