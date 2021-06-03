@@ -77,7 +77,7 @@ esac
 done
 
 read -p "请输入您的github地址: " Github
-Github=${Github:-"https://github.com/coolsnowwolf/lede"}
+Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo "您的Github地址为: $Github"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
