@@ -194,10 +194,11 @@ TIME && read -p "是否增删插件? [y/N]: " YN
 case ${YN:-N} in
 	[Yy])
 		make menuconfig
-	echo ""
+		break
 	;;
 	[Nn]) 
-	TIME g "取消增删插件,继续编译固件..."
+		echo ""
+		TIME g "取消增删插件,继续编译固件..."
 		break
 	;;
 esac
