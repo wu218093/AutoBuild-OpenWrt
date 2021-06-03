@@ -57,7 +57,7 @@ fi
 df -h
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
 echo "${Ubuntu_lv}" > pack
-CURRENT_Version="$(awk 'NR==1' /pack)"
+CURRENT_Version="$(awk 'NR==1' pack)"
 CURRENT_Ver="60G"
 if [[ "${CURRENT_Version}" -lt "${CURRENT_Ver}" ]];then
 	TIME && read -p "是否增删插件? [y/N]: " YN
