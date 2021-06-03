@@ -148,17 +148,15 @@ if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source build/$firmware/upgrade.sh && Diy_Part1
 fi
 make menuconfig
-make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
-[ -s DEVICE_NAME ] && echo "TARGET_PROFILE=$(cat DEVICE_NAME)"
+          [ -s DEVICE_NAME ] && echo "TARGET_PROFILE=$(cat DEVICE_NAME)"
 elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
           [ -s DEVICE_NAME ] && echo "TARGET_PROFILE=$(cat DEVICE_NAME)"
 else
           echo "TARGET_PROFILE=armvirt"
 fi
-source build/$firmware/common.sh && Diy_chuli
 if [ "${REGULAR_UPDATE}" == "true" ]; then
           source build/$firmware/upgrade.sh && Diy_Part2
 fi
