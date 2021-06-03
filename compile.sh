@@ -114,19 +114,19 @@ CangKu="${Apidz##*/}"
 
 if [[ $firmware == "Lede_source" ]]; then
           git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
-	  ZZZ=package/lean/default-settings/files/zzz-default-settings
+	  ZZZ="${package/lean/default-settings/files/zzz-default-settings}"
           OpenWrt_name="18.06"
 elif [[ $firmware == "Lienol_source" ]]; then
           git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
-	  ZZZ=package/default-settings/files/zzz-default-settings
+	  ZZZ="${package/default-settings/files/zzz-default-settings}"
           OpenWrt_name="19.07"
 elif [[ $firmware == "Project_source" ]]; then
           git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-	  ZZZ=package/emortal/default-settings/files/zzz-default-settings
+	  ZZZ="${package/emortal/default-settings/files/zzz-default-settings}"
           OpenWrt_name="18.06"
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
-	  ZZZ=package/emortal/default-settings/files/zzz-default-settings
+	  ZZZ="${package/emortal/default-settings/files/zzz-default-settings}"
           OpenWrt_name="21.02"
 fi
 
@@ -176,11 +176,10 @@ if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
 fi
 /bin/bash build/$firmware/$DIY_PART_SH
 ./scripts/feeds update -a && ./scripts/feeds install -a
-cp build/$firmware/.config .config
-echo >> .config
-cat build/$firmware/.config >> .config
+[ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
+	  source build/$firmware/upgrade.sh && Diy_Part1
 fi
 echo
 echo
@@ -215,14 +214,14 @@ if [ "${REGULAR_UPDATE}" == "true" ]; then
 fi
 echo
 echo
-TIME r "*****15秒后开始编译*****"
+TIME y "*****10秒后开始编译*****"
 echo
 TIME g "你可以随时按Ctrl+C停止编译"
 echo
-TIME y "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
+TIME z "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
 echo
 echo
-sleep 3s
+sleep 8s
 
 make download -j8
 echo -e "$(($(nproc)+1)) thread compile"
