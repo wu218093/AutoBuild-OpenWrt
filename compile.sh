@@ -18,11 +18,11 @@ TIME() {
 }
 echo
 echo
-TIME g "|*******************************************|"
+TIME z "|*******************************************|"
 TIME g "|                                           |"
-TIME r "|       本脚本仅适用于在Ubuntu环境下编译      |"
+TIME r "|       本脚本仅适用于在Ubuntu环境下编译     |"
 TIME g "|                                           |"
-TIME y "|      首次编译,请输入Ubuntu密码继续下一步    |"
+TIME y "|      首次编译,请输入Ubuntu密码继续下一步   |"
 TIME g "|                                           |"
 TIME g "|*******************************************|"
 echo
@@ -39,7 +39,7 @@ clear
 echo
 echo 
 echo 
-TIME z "|*******************************************|"
+TIME g "|*******************************************|"
 TIME z "|                                           |"
 TIME z "|                                           |"
 TIME y "|           基本环境部署完成......          |"
@@ -64,17 +64,21 @@ fi
 
 rm -Rf openwrt
 
-TIME g "
+TIME z "
 	1. Lede_source
+	
 	2. Lienol_source
+	
 	3. Project_source
+	
 	4. Spirit_source
+	
 	5. Exit
 "
 
 while :; do
 
-TIME && read -p "你想要编译哪个源码？请选择1-4回车,选择5回车为退出！ " CHOOSE
+TIME && read -p "你想要编译哪个源码？请在1-4选择回车,选择5回车为退出！ " CHOOSE
 
 case $CHOOSE in
 	1)
@@ -103,6 +107,7 @@ echo
 echo
 TIME && read -p "请输入您的github地址: " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
+echo
 TIME g "您的Github地址为: $Github"
 echo
 echo
@@ -184,14 +189,13 @@ if [[ "${REGULAR_UPDATE}" == "true" ]]; then
 fi
 echo
 echo
-echo
 TIME && read -p "是否增删插件?[Y/n]:" Choose
 [[ "${Choose}" == Y ]] || [[ "${Choose}" == y ]] && {
           make menuconfig
 } || {
-          TIME g "已取消增删插件..."
+          echo
+          TIME g "已取消增删插件,继续编译固件..."
 }
-echo
 echo
 echo
 make defconfig
@@ -210,9 +214,11 @@ fi
 echo
 echo
 echo
-TIME y "*****15秒后开始编译*****"
-TIME b "你可以随时按Ctrl+C停止编译"
-TIME l "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
+TIME r "*****15秒后开始编译*****"
+echo
+TIME g "你可以随时按Ctrl+C停止编译"
+echo
+TIME y "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
 echo
 echo
 echo
