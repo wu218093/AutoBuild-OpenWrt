@@ -144,9 +144,9 @@ fi
 cp build/$firmware/.config .config
 echo >> .config
 cat build/$firmware/.config >> .config
-make menuconfig
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
+	  source build/$firmware/upgrade.sh && Diy_Part1
 fi
 make menuconfig
 make defconfig
@@ -172,7 +172,6 @@ echo
 echo
 echo
 sleep 3s
-make defconfig
 make download -j8
 echo -e "$(($(nproc)+1)) thread compile"
 make -j$(($(nproc)+1)) || make -j1 V=s
