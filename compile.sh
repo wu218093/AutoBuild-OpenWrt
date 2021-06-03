@@ -56,6 +56,7 @@ if [ "$USER" == "root" ]; then
 fi
 df -h
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
+echo "${Ubuntu_lv}" > pack
 if [[ "${Ubuntu_lv}" -lt "60G" ]];then
 	while :; do
 	TIME && read -p "是否增删插件? [y/N]: " YN
