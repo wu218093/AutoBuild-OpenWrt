@@ -53,7 +53,6 @@ if [[ "${Ubuntu_kj}" -lt "80" ]];then
 fi
 echo
 echo
-rm -Rf openwrt
 
 TIME g "1. Lede_source"
 echo
@@ -131,18 +130,16 @@ elif [[ $firmware == "Spirit_source" ]]; then
           OpenWrt_name="21.02"
 fi
 
-chmod -R +x openwrt/build/common
-chmod -R +x openwrt/build/${firmware}
-source openwrt/build/${firmware}/settings.ini
+chmod -R +x build/common
+chmod -R +x build/${firmware}
+source build/${firmware}/settings.ini
 
 Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
 
-rm -rf AutoBuild-OpenWrt
 echo
 TIME g "正在加载自定义文件,请耐心等候~~~"
 echo
-cd openwrt
 git pull
 if [[ "${REPO_BRANCH}" == "master" ]]; then
           source build/${firmware}/common.sh && Diy_lede
