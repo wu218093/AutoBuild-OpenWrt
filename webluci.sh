@@ -120,11 +120,6 @@ esac
 done
 echo
 echo
-read -p "请输入后台地址 [回车默认192.168.2.2]: " ip
-ip=${ip:-"192.168.2.2"}
-echo "您的后台地址为: $ip"
-sed -i 's/192.168.2.2/$ip/' AutoBuild-OpenWrt/build/*/diy-part.sh
-echo
 TIME g "正在下载源码中,请耐心等候~~~"
 echo
 if [[ $firmware == "Lede_source" ]]; then
@@ -154,7 +149,6 @@ elif [[ $firmware == "Spirit_source" ]]; then
 fi
 cp -Rf AutoBuild-OpenWrt/build openwrt/build
 chmod -R +x openwrt/build/${firmware}
-source openwrt/build/${firmware}/settings.ini
 
 rm -rf AutoBuild-OpenWrt
 echo
@@ -174,6 +168,9 @@ elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon'  | xargs -i rm -rf {}
 fi
 git clone --depth 1 -b "${REPO_BRANCH}" https://github.com/281677160/openwrt-package
+cp -Rf feeds/luci/applications/* ./package/lean/
+cp -Rf feeds/luci/themes/* ./package/lean/
+rm -rf feeds/luci
 cp -Rf openwrt-package/* ./ && rm -rf openwrt-package
 if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
           cp -Rf build/$firmware/diy/* ./
@@ -187,15 +184,13 @@ fi
 echo
 TIME g "正在加载源和安装源,请耐心等候~~~"
 echo
-source build/$firmware/$DIY_PART_SH
+source build/$firmware/diy-part.sh
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
-[ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
+[ -e build/$firmware/.config ] && mv build/$firmware/.config .config
 echo
 echo
 make menuconfig
-echo
-echo
 echo
 echo
 TIME y "*****10秒后开始编译*****"
