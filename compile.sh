@@ -18,7 +18,7 @@ TIME() {
       }
 }
 
-if [ -n "$(ls -A "webluci.sh" 2>/dev/null)" ]; then
+if [ -n "$(ls -A "openwrt/webluci.sh" 2>/dev/null)" ]; then
 	Apt_get="YES"
 	rm -Rf openwrt
 else
@@ -27,7 +27,7 @@ else
 fi
 echo
 echo
-if [[ "$Apt_get" == "YES" ]]; then
+if [[ "$Apt_get" == "NO" ]]; then
 TIME z "|*******************************************|"
 TIME g "|                                           |"
 TIME r "|     本脚本仅适用于在Ubuntu环境下编译      |"
