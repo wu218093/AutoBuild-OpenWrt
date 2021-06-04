@@ -66,8 +66,6 @@ fi
 
 echo
 df -h
-echo
-echo
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
 Ubuntu_kj="${Ubuntu_lv%?}"
 echo
