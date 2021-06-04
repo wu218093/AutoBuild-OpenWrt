@@ -52,48 +52,19 @@ if [[ "${Ubuntu_kj}" -lt "80" ]];then
 	esac
 fi
 echo
-echo
 
-TIME g "1. Lede_source"
-echo
-TIME g "2. Lienol_source"
-echo
-TIME g "3. Project_source"
-echo
-TIME g "4. Spirit_source"
-echo
-TIME r "5. Exit"
-echo
-echo
 
-while :; do
+if [[ -n "$(ls -A "Lede_source" 2>/dev/null)" ]]; then
+          firmware="Lede_source"
+elif [[ -n "$(ls -A "Lienol_source" 2>/dev/null)" ]]; then
+          firmware="Lienol_source"
+elif [[ -n "$(ls -A "Project_source" 2>/dev/null)" ]]; then
+          firmware="Project_source"
+elif [[ -n "$(ls -A "Spirit_source" 2>/dev/null)" ]]; then
+          firmware="Spirit_source
+fi
 
-TIME && read -p "请选择编译源码,输入[1、2、3、4]选择对应源码,[5]为退出： " CHOOSE
-
-case $CHOOSE in
-	1)
-		firmware="Lede_source"
-	break
-	;;
-	2)
-		firmware="Lienol_source"
-	break
-	;;
-	3)
-		firmware="Project_source"
-	break
-	;;
-	4)
-		firmware="Spirit_source"
-	break
-	;;
-	5)	exit 0
-	;;
-
-esac
-done
 echo
-
 while :; do
 
 TIME && read -p "请选择是否需要执行 make menuconfig 增删插件命令? [y/N]: " MENU
