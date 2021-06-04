@@ -157,21 +157,24 @@ if [[ $firmware == "Lede_source" ]]; then
           git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
 	  ZZZ="package/lean/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
+	  echo "compile" > openwrt/Lede_source
 elif [[ $firmware == "Lienol_source" ]]; then
           git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
 	  ZZZ="package/default-settings/files/zzz-default-settings"
           OpenWrt_name="19.07"
+	  echo "compile" > openwrt/Lienol_source
 elif [[ $firmware == "Project_source" ]]; then
           git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
 	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
+	  echo "compile" > openwrt/Project_source
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
 	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="21.02"
+	  echo "compile" > openwrt/Spirit_source
 fi
 
-echo "compile" > compile
 cp -Rf AutoBuild-OpenWrt/webluci.sh openwrt
 chmod -R +x openwrt/webluci.sh
 cp -Rf AutoBuild-OpenWrt/build openwrt/build
