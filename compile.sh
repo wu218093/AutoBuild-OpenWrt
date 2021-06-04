@@ -72,7 +72,7 @@ Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}'
 Ubuntu_kj="${Ubuntu_lv%?}"
 TIME z "您当前系统可用空间为${Ubuntu_kj}G"
 echo
-if [[ "${Ubuntu_kj}" -lt "80" ]];then
+if [[ "${Ubuntu_kj}" -lt "30" ]];then
 	TIME && read -p "可用空间小于 30G 编译容易出错,是否继续? [y/N]: " YN
 	case ${YN} in
 		[Yy])
