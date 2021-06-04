@@ -164,6 +164,8 @@ elif [[ $firmware == "Spirit_source" ]]; then
 fi
 
 echo "compile" > compile
+cp -Rf AutoBuild-OpenWrt/webluci.sh openwrt
+chmod -R +x openwrt/webluci.sh
 cp -Rf AutoBuild-OpenWrt/build openwrt/build
 git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/common
 chmod -R +x openwrt/build/common
