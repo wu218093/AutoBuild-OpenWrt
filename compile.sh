@@ -105,31 +105,31 @@ echo
 
 while :; do
 
-TIME g "请选择编译源码,输入[1、2、3、4]然后回车确认您的选择,输入[5]回车为退出程序" && read -p " 输入您的选择： " CHOOSE
+TIME g "请选择编译源码,输入[1、2、3、4]然后回车确认您的选择,输入[5]回车为退出程序！" && read -p " 输入您的选择： " CHOOSE
 
 case $CHOOSE in
 	1)
 		firmware="Lede_source"
 		echo
-		TIME y "您选择了: $firmware"
+		TIME y "您选择了：$firmware"
 	break
 	;;
 	2)
 		firmware="Lienol_source"
 		echo
-		TIME y "您选择了: $firmware"
+		TIME y "您选择了：$firmware"
 	break
 	;;
 	3)
 		firmware="Project_source"
 		echo
-		TIME y "您选择了: $firmware"
+		TIME y "您选择了：$firmware"
 	break
 	;;
 	4)
 		firmware="Spirit_source"
 		echo
-		TIME y "您选择了: $firmware"
+		TIME y "您选择了：$firmware"
 	break
 	;;
 	5)
@@ -144,25 +144,25 @@ echo
 TIME g "请输入后台地址[ 直接回车默认192.168.1.1 ]" && read -p " 请输入后台地址：" ip
 ip=${ip:-"192.168.1.1"}
 echo
-TIME y "您的后台地址为: $ip"
+TIME y "您的后台地址为：$ip"
 echo
 echo
 
 while :; do
 
-TIME g "是否需要执行[make menuconfig]命令来增删插件?" && read -p " [Y/y确认，N/n否定]: " MENU
+TIME g "是否需要执行[make menuconfig]命令来增删插件?" && read -p " [Y/y确认，N/n否定]： " MENU
 
 case $MENU in
 	[Yy])
 		Menuconfig="YES"
 		echo
-		TIME y "您选择了执行[make menuconfig]命令"
+		TIME y "您选择了执行[make menuconfig]命令!"
 	break
 	;;
 	[Nn])
 		Menuconfig="NO"
 		echo
-		TIME r "您放弃执行[make menuconfig]命令"
+		TIME r "您放弃执行[make menuconfig]命令!"
 	break
 	;;
 esac
@@ -171,7 +171,7 @@ echo
 echo
 while :; do
 
-TIME g "是否把定时更新插件编译进固件,要定时更新得把固件上传在github的Releases?"  && read -p " [Y/y确认，N/n否定]: " RELE
+TIME g "是否把定时更新插件编译进固件,要定时更新得把固件上传在github的Releases?"  && read -p " [Y/y确认，N/n否定]： " RELE
 
 case $RELE in
 	[Yy])
@@ -181,7 +181,7 @@ case $RELE in
 	[Nn])
 		REGULAR_UPDATE="false"
 		echo
-		TIME r "您放弃了把定时更新插件编译进固件"
+		TIME r "您放弃了把定时更新插件编译进固件!"
 	break
 	;;
 esac
@@ -189,11 +189,11 @@ done
 echo
 echo
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入地址: " Github
+TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入地址： " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
 echo
-TIME y "您的Github地址为: $Github"
+TIME y "您的Github地址为：$Github"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
