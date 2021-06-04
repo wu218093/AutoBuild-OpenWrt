@@ -203,25 +203,21 @@ if [[ $firmware == "Lede_source" ]]; then
           git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
 	  ZZZ="package/lean/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
-	  REPO_BRANCH="master"
 	  echo "compile" > openwrt/Lede_source
 elif [[ $firmware == "Lienol_source" ]]; then
           git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
 	  ZZZ="package/default-settings/files/zzz-default-settings"
           OpenWrt_name="19.07"
-	  REPO_BRANCH="19.07"
 	  echo "compile" > openwrt/Lienol_source
 elif [[ $firmware == "Project_source" ]]; then
           git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
 	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
-	  REPO_BRANCH="openwrt-18.06"
 	  echo "compile" > openwrt/Project_source
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
 	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="21.02"
-	  REPO_BRANCH="openwrt-21.02"
 	  echo "compile" > openwrt/Spirit_source
 fi
 cp -Rf AutoBuild-OpenWrt/webluci.sh openwrt
@@ -230,7 +226,7 @@ cp -Rf AutoBuild-OpenWrt/build openwrt/build
 git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/common
 chmod -R +x openwrt/build/common
 chmod -R +x openwrt/build/${firmware}
-
+source openwrt/build/${firmware}/settings.ini
 Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
 
@@ -274,7 +270,6 @@ if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
 fi
 echo
 TIME g "正在加载源和安装源,请耐心等候~~~"
-echo
 sed -i 's/"aMule设置"/"电驴下载"/g' `grep "aMule设置" -rl ./`
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
@@ -289,7 +284,6 @@ sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl .
 sed -i "/uci commit fstab/a\uci commit network" $ZZZ
 sed -i "/uci commit network/i\uci set network.lan.ipaddr='$ip'" $ZZZ
 sed -i '/CYXluq4wUazHjmCDBCqXF/d' $ZZZ
-echo
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
 cp -rf build/${firmware}/.config .config
