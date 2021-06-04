@@ -132,11 +132,11 @@ while :; do
 TIME && read -p "请选择是否需要执行 make menuconfig 增删插件命令！ " MENU
 
 case $MENU in
-	1)
+	Y | y)
 		Menuconfig="YES"
 	break
 	;;
-	2)
+	N | n)
 		Menuconfig="NO"
 	break
 	;;
