@@ -162,6 +162,17 @@ TIME g "正在加载自定义文件,请耐心等候~~~"
 echo
 cd openwrt
 ./scripts/feeds clean && ./scripts/feeds update -a
+if [[ "${REPO_BRANCH}" == "master" ]]; then
+          find . -name 'luci-app-netdata' -o -name 'luci-theme-argon' -o -name 'k3screenctrl' | xargs -i rm -rf {}
+	  sed -i 's/iptables -t nat/# iptables -t nat/g' "${ZZZ}"
+elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
+          find . -name 'luci-app-netdata' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
+elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
+          find . -name 'luci-theme-argonv3' -o -name 'luci-app-argon-config' -o -name 'luci-theme-argon'  | xargs -i rm -rf {}
+          find . -name 'luci-theme-argonv2' -o -name 'luci-app-timecontrol' | xargs -i rm -rf {}
+elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
+          find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon'  | xargs -i rm -rf {}
+fi
 git clone --depth 1 -b "${REPO_BRANCH}" https://github.com/281677160/openwrt-package
 cp -Rf openwrt-package/* ./ && rm -rf openwrt-package
 if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
@@ -182,16 +193,7 @@ source build/$firmware/$DIY_PART_SH
 [ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
 echo
 echo
-TIME && read -p "是否增删插件? [y/N]: " CJYN
-case ${CJYN} in
-	[Yy])
-		make menuconfig
-	;;
-	[Nn]) 
-		echo ""
-		TIME y "取消增删插件,继续编译固件..."
-	;;
-esac
+make menuconfig
 echo
 echo
 echo
