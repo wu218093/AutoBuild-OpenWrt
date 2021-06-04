@@ -72,7 +72,7 @@ fi
 echo
 while :; do
 
-TIME && read -p "你正在使用[ ${firmware} ]编译[ ${TARGET_PROFILE} ]固件,是否需要更换源码? [y/N]: " GHYM
+TIME g "你正在使用[ ${firmware} ]编译[ ${TARGET_PROFILE} ]固件,是否需要更换源码?" && read -p " [Y/y确认，N/n否定]： " GHYM
 
 case $GHYM in
 	[Yy])
@@ -86,17 +86,53 @@ case $GHYM in
 esac
 done
 echo
+echo
 while :; do
 
-TIME && read -p "是否需要执行[make menuconfig]命令来增删插件? [y/N]: " MENU
+TIME g "是否把定时更新插件编译进固件,要定时更新得把固件上传在github的Releases?"  && read -p " [Y/y确认，N/n否定]： " RELE
+
+case $RELE in
+	[Yy])
+		REG_UPDATE="true"
+	break
+	;;
+	[Nn])
+		REG_UPDATE="false"
+		echo
+		TIME r "您放弃了把定时更新插件编译进固件!"
+	break
+	;;
+esac
+done
+echo
+echo
+if [[ "${REGULAR_UPDATE}" == "true" ]]; then
+TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入Github地址： " Github
+Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
+echo
+echo
+TIME y "您的Github地址为：$Github"
+Apidz="${Github##*com/}"
+Author="${Apidz%/*}"
+CangKu="${Apidz##*/}"
+fi
+echo
+echo
+while :; do
+
+TIME g "是否需要执行[make menuconfig]命令来增删插件?" && read -p " [Y/y确认，N/n否定]： " MENU
 
 case $MENU in
 	[Yy])
 		Menuconfig="YES"
+		echo
+		TIME y "您选择了执行[make menuconfig]命令!"
 	break
 	;;
 	[Nn])
 		Menuconfig="NO"
+		echo
+		TIME r "您放弃执行[make menuconfig]命令!"
 	break
 	;;
 esac
