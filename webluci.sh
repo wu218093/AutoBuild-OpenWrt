@@ -70,7 +70,7 @@ case $GHYM in
 		cd ../ && git clone https://github.com/281677160/AutoBuild-OpenWrt && bash AutoBuild-OpenWrt/compile.sh
 	;;
 	[Nn])
-		Menuconfig="NO"
+		TIME r  "取消编"
 	;;
 esac
 echo
