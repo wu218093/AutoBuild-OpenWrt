@@ -22,7 +22,8 @@ echo
 if [ "$USER" == "root" ]; then
 	echo
 	echo
-	TIME g "请勿使用root用户编译，换一个普通用户吧~~"
+	TIME r "请勿使用root用户编译，换一个普通用户吧~~"
+	echo
 	sleep 3s
 	exit 0
 fi
@@ -64,7 +65,7 @@ fi
 echo
 while :; do
 
-TIME && read -p "你正在使用${firmware}编译固件,是否需要更换源码? [y/N]: " GHYM
+TIME && read -p "你正在使用[ ${firmware} ]编译固件,是否需要更换源码? [y/N]: " GHYM
 
 case $GHYM in
 	[Yy])
@@ -81,7 +82,7 @@ echo
 echo
 while :; do
 
-TIME && read -p "请选择是否需要执行 make menuconfig 增删插件命令? [y/N]: " MENU
+TIME && read -p "是否需要执行[make menuconfig]命令来增删插件? [y/N]: " MENU
 
 case $MENU in
 	[Yy])
