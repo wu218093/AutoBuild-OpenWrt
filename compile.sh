@@ -288,6 +288,7 @@ sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
 sed -i "/uci commit fstab/a\uci commit network" $ZZZ
 sed -i "/uci commit network/i\uci set network.lan.ipaddr='$ip'" $ZZZ
+sed -i '/CYXluq4wUazHjmCDBCqXF/d' $ZZZ
 echo
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
