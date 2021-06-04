@@ -26,7 +26,17 @@ if [ "$USER" == "root" ]; then
 	sleep 3s
 	exit 0
 fi
-
+if [[ -n "$(ls -A "Lede_source" 2>/dev/null)" ]]; then
+          firmware="Lede_source"
+elif [[ -n "$(ls -A "Lienol_source" 2>/dev/null)" ]]; then
+          firmware="Lienol_source"
+elif [[ -n "$(ls -A "Project_source" 2>/dev/null)" ]]; then
+          firmware="Project_source"
+elif [[ -n "$(ls -A "Spirit_source" 2>/dev/null)" ]]; then
+          firmware="Spirit_source
+else
+          TIME z "您当前系统可用空间为${Ubuntu_kj}G"
+fi
 echo
 df -h
 echo
