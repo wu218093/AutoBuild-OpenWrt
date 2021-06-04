@@ -136,7 +136,7 @@ echo
 
 while :; do
 
-TIME && read -p "请选择是否需要执行 make menuconfig 增删插件命令? [y/N]: " MENU
+TIME && read -p "是否需要执行[make menuconfig]命令来增删插件? [y/N]: " MENU
 
 case $MENU in
 	[Yy])
