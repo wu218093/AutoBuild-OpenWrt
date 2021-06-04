@@ -87,7 +87,6 @@ if [[ "${Ubuntu_kj}" -lt "30" ]];then
 	esac
 fi
 echo
-echo
 
 TIME g "1. Lede_source"
 echo
