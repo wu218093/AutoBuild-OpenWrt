@@ -116,9 +116,9 @@ elif [[ $firmware == "Spirit_source" ]]; then
           OpenWrt_name="21.02"
 fi
 
-chmod -R +x build/common
-chmod -R +x build/${firmware}
-source build/${firmware}/settings.ini
+chmod -R +x openwrt/build/common
+chmod -R +x openwrt/build/${firmware}
+source openwrt/build/${firmware}/settings.ini
 
 Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
