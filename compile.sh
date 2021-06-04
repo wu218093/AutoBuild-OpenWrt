@@ -202,6 +202,7 @@ TIME g "正在加载源和安装源,请耐心等候~~~"
 echo
 source build/$firmware/$DIY_PART_SH
 ./scripts/feeds update -a && ./scripts/feeds install -a
+./scripts/feeds install -a
 [ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
