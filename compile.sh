@@ -262,19 +262,20 @@ if [ "${REGULAR_UPDATE}" == "true" ]; then
 fi
 echo
 echo
-TIME y "*****10秒后开始编译*****"
+TIME y "*****5秒后开始下载DL文件*****"
 echo
 TIME g "你可以随时按Ctrl+C停止编译"
 echo
 TIME z "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
 echo
 echo
-sleep 8s
-TIME g "正在下载插件包"
+sleep 3s
+TIME g "正在下载插件包,请耐心等待..."
 make -j8 download V=s
 make -j8 download
 echo
-TIME g "开始编译固件,时间有点长,请耐心等待..."
+TIME g "3秒后开始编译固件,时间有点长,请耐心等待..."
+sleep 2s
 echo
 make -j1 V=s
 
