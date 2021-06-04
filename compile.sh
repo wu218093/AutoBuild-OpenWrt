@@ -25,7 +25,7 @@ else
 fi
 echo
 echo
-if [[ $Apt_get == "NO" ]]; then
+if [[ "$Apt_get" == "NO" ]]; then
 TIME z "|*******************************************|"
 TIME g "|                                           |"
 TIME r "|     本脚本仅适用于在Ubuntu环境下编译      |"
