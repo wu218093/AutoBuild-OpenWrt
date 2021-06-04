@@ -172,11 +172,11 @@ TIME g "是否把定时更新插件编译进固件,要定时更新得把固件�
 
 case $RELE in
 	[Yy])
-		REGULAR_UPDATE="true"
+		REG_UPDATE="true"
 	break
 	;;
 	[Nn])
-		REGULAR_UPDATE="false"
+		REG_UPDATE="false"
 		echo
 		TIME r "您放弃了把定时更新插件编译进固件!"
 	break
@@ -227,6 +227,7 @@ git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/co
 chmod -R +x openwrt/build/common
 chmod -R +x openwrt/build/${firmware}
 source openwrt/build/${firmware}/settings.ini
+REGULAR_UPDATE="REG_UPDATE"
 Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
 
