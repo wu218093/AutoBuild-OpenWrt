@@ -30,13 +30,13 @@ fi
 echo
 df -h
 echo
-echo
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
 Ubuntu_kj="${Ubuntu_lv%?}"
-TIME z "您当前系统可用空间为${Ubuntu_kj}G"
 echo
-if [[ "${Ubuntu_kj}" -lt "30" ]];then
-	TIME && read -p "可用空间小于 30G 编译容易出错,是否继续? [y/N]: " YN
+if [[ "${Ubuntu_kj}" -lt "80" ]];then
+	TIME z "您当前系统可用空间为${Ubuntu_kj}G"
+	echo ""
+	TIME && read -p "可用空间小于[ 30G ]编译容易出错,是否继续? [y/N]: " YN
 	case ${YN} in
 		[Yy])
 			echo ""
@@ -73,12 +73,11 @@ case $GHYM in
 	break
 	;;
 	[Nn])
-		TIME r  "......"
+		TIME r  ""
 	break
 	;;
 esac
 done
-echo
 echo
 while :; do
 
@@ -95,7 +94,6 @@ case $MENU in
 	;;
 esac
 done
-echo
 echo
 Github="${https://github.com/281677160/AutoBuild-OpenWrt}"
 Apidz="${Github##*com/}"
@@ -160,10 +158,9 @@ fi
 echo
 TIME g "正在加载源和安装源,请耐心等候~~~"
 echo
-source build/$firmware/$DIY_PART_SH
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
-[ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
+[ -e .config_bf ] && mv .config_bf .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 	  source build/$firmware/upgrade.sh && Diy_Part1
@@ -191,32 +188,28 @@ if [ "${REGULAR_UPDATE}" == "true" ]; then
 fi
 echo
 echo
-TIME y "*****10秒后开始编译*****"
+TIME y "*****5秒后开始下载DL文件*****"
 echo
 TIME g "你可以随时按Ctrl+C停止编译"
 echo
 TIME z "大陆用户编译前请准备好梯子,使用大陆白名单或全局模式"
 echo
 echo
-sleep 8s
-TIME g "正在下载插件包"
+sleep 3s
+TIME g "正在下载插件包,请耐心等待..."
 make -j8 download
 echo
-TIME g "开始编译固件,时间有点长,请耐心等待..."
-echo
-make -j$(($(nproc) + 1)) V=s
+TIME g "3秒后开始编译固件,时间有点长,请耐心等待..."
+sleep 2s
+echo -e "$(($(nproc)+1)) thread compile"
+make -j$(($(nproc)+1)) || make -j1 V=s
 
 if [ "$?" == "0" ]; then
 TIME y "
-
 编译完成~~~
-
-后台地址: $ip
-
+初始后台地址: $ip
 用户名: root
-
 密 码: 无
-
 "
 fi
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
