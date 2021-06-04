@@ -217,7 +217,13 @@ else
           TIME y ""
 fi
 make defconfig
-
+if [[ `grep -c "CONFIG_TARGET_x86_64=y" openwrt/.config` -eq '1' ]]; then
+          TARGET_PROFILE="x86-64"
+elif [[ `grep -c "CONFIG_TARGET.*DEVICE.*=y" openwrt/.config` -eq '1' ]]; then
+          TARGET_PROFILE="$(egrep -o "CONFIG_TARGET.*DEVICE.*=y" openwrt/.config | sed -r 's/.*DEVICE_(.*)=y/\1/')"
+else
+          TARGET_PROFILE="armvirt"
+fi
 if [ "${REGULAR_UPDATE}" == "true" ]; then
           source build/$firmware/upgrade.sh && Diy_Part2
 fi
