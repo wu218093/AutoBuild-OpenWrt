@@ -133,8 +133,8 @@ esac
 done
 echo
 echo
-read -p "请输入后台地址 [回车默认10.0.0.1]: " ip
-ip=${ip:-"10.0.0.1"}
+read -p "请输入后台地址[回车默认192.168.1.1]: " ip
+ip=${ip:-"192.168.1.1"}
 echo
 echo "您的后台地址为: $ip"
 echo
@@ -157,7 +157,27 @@ esac
 done
 echo
 echo
-Github="${https://github.com/281677160/AutoBuild-OpenWrt}"
+while :; do
+
+TIME && read -p "是否定时更新插件编译进固件,要定时更新得把固件上传在github的Releases? [y/N]: " MENU
+
+case $MENU in
+	[Yy])
+		REGULAR_UPDATE="true"
+	break
+	;;
+	[Nn])
+		REGULAR_UPDATE="false"
+	break
+	;;
+esac
+done
+if [[ "${REGULAR_UPDATE}" == "true" ]]; then
+read -p "请输入Github地址[回车默认https://github.com/281677160/AutoBuild-OpenWrt]: " ip
+ip=${ip:-"https://github.com/281677160/AutoBuild-OpenWrt"}
+echo
+echo "您的Github地址为: $ip"
+fi
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
