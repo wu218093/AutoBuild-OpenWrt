@@ -67,7 +67,7 @@ TIME && read -p "你正在使用${firmware}编译,是否更换源码? [y/N]: " G
 
 case $GHYM in
 	[Yy])
-		cd ../ && git clone https://github.com/281677160/AutoBuild-OpenWrt && bash AutoBuild-OpenWrt/compile.sh
+		git clone https://github.com/281677160/AutoBuild-OpenWrt && bash AutoBuild-OpenWrt/compile.sh
 	;;
 	[Nn])
 		TIME r  "取消编"
@@ -121,6 +121,7 @@ PATH1="$PWD/openwrt/build/${firmware}"
 echo
 TIME g "正在加载自定义文件,请耐心等候~~~"
 echo
+cd openwrt
 git pull
 if [[ "${REPO_BRANCH}" == "master" ]]; then
           source build/${firmware}/common.sh && Diy_lede
