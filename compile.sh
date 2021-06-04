@@ -1,4 +1,12 @@
 #/bin/bash
+
+if [ -z "$(ls -A "openwrt/compile" 2>/dev/null)" ]; then
+	source compile.sh && Install_openwrt
+else
+	exit 0
+fi
+
+Install_openwrt() {
 TIME() {
 [[ -z "$1" ]] && {
 	echo -ne " "
@@ -162,6 +170,7 @@ elif [[ $firmware == "Spirit_source" ]]; then
           OpenWrt_name="21.02"
 fi
 
+echo "compile" > compile
 cp -Rf AutoBuild-OpenWrt/build openwrt/build
 git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/common
 chmod -R +x openwrt/build/common
@@ -229,6 +238,7 @@ make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
           [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
+	  rm -rf DEVICE_NAME
 elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
           [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
@@ -265,3 +275,4 @@ fi
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
     source build/${firmware}/upgrade.sh && Diy_Part3
 fi
+}
