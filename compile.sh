@@ -266,6 +266,7 @@ else
           TIME y ""
 fi
 make defconfig
+cp -rf .config .config_bf
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
           [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
