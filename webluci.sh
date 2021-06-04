@@ -54,16 +54,6 @@ fi
 echo
 
 
-if [[ -n "$(ls -A "Lede_source" 2>/dev/null)" ]]; then
-          firmware="Lede_source"
-elif [[ -n "$(ls -A "Lienol_source" 2>/dev/null)" ]]; then
-          firmware="Lienol_source"
-elif [[ -n "$(ls -A "Project_source" 2>/dev/null)" ]]; then
-          firmware="Project_source"
-elif [[ -n "$(ls -A "Spirit_source" 2>/dev/null)" ]]; then
-          firmware="Spirit_source
-fi
-
 echo
 while :; do
 
