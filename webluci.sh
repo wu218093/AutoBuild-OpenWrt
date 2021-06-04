@@ -106,7 +106,7 @@ esac
 done
 echo
 echo
-if [[ "${REGULAR_UPDATE}" == "true" ]]; then
+if [[ "${REG_UPDATE}" == "true" ]]; then
 TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入Github地址： " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
@@ -217,6 +217,7 @@ else
           TIME y ""
 fi
 make defconfig
+cp -rf .config .config_bf
 if [[ `grep -c "CONFIG_TARGET_x86_64=y" openwrt/.config` -eq '1' ]]; then
           TARGET_PROFILE="x86-64"
 elif [[ `grep -c "CONFIG_TARGET.*DEVICE.*=y" openwrt/.config` -eq '1' ]]; then
