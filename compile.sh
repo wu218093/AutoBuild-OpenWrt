@@ -133,6 +133,13 @@ case $CHOOSE in
 esac
 done
 echo
+echo
+read -p "请输入后台地址 [回车默认10.0.0.1]: " ip
+ip=${ip:-"10.0.0.1"}
+echo
+echo "您的后台地址为: $ip"
+echo
+echo
 
 while :; do
 
@@ -231,7 +238,20 @@ fi
 echo
 TIME g "正在加载源和安装源,请耐心等候~~~"
 echo
-source build/$firmware/$DIY_PART_SH
+sed -i 's/"aMule设置"/"电驴下载"/g' `grep "aMule设置" -rl ./`
+sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
+sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
+sed -i 's/"KMS 服务器"/"KMS激活"/g' `grep "KMS 服务器" -rl ./`
+sed -i 's/"TTYD 终端"/"命令窗"/g' `grep "TTYD 终端" -rl ./`
+sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
+sed -i 's/"Web 管理"/"Web"/g' `grep "Web 管理" -rl ./`
+sed -i 's/"管理权"/"改密码"/g' `grep "管理权" -rl ./`
+sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
+sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
+sed -i "/uci commit fstab/a\uci commit network" $ZZZ
+sed -i "/uci commit network/i\uci set network.lan.ipaddr='$ip'" $ZZZ
+echo
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
 [ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
