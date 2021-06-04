@@ -168,6 +168,7 @@ case $MENU in
 	;;
 	[Nn])
 		REGULAR_UPDATE="false"
+		Github="${https://github.com/281677160/AutoBuild-OpenWrt}"
 	break
 	;;
 esac
