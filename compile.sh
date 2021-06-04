@@ -95,7 +95,7 @@ echo
 
 while :; do
 
-TIME && read -p "请选择源码？输入1-4选择然后回车,选择5回车为退出！ " CHOOSE
+TIME && read -p "请选择编译源码,输入[1、2、3、4]选择对应源码,[5]为退出： " CHOOSE
 
 case $CHOOSE in
 	1)
@@ -126,11 +126,11 @@ while :; do
 TIME && read -p "请选择是否需要执行 make menuconfig 增删插件命令? [y/N]: " MENU
 
 case $MENU in
-	Y | y)
+	[Yy])
 		Menuconfig="YES"
 	break
 	;;
-	N | n)
+	[Nn])
 		Menuconfig="NO"
 	break
 	;;
