@@ -17,8 +17,15 @@ TIME() {
 	 }
       }
 }
+
+if [ -z "$(ls -A "webluci.sh" 2>/dev/null)" ]; then
+	Apt_get="YES"
+else
+	Apt_get="NO"
+fi
 echo
 echo
+if [[ $Apt_get == "NO" ]]; then
 TIME z "|*******************************************|"
 TIME g "|                                           |"
 TIME r "|     本脚本仅适用于在Ubuntu环境下编译      |"
@@ -44,6 +51,7 @@ TIME y "|           基本环境部署完成......          |"
 TIME z "|                                           |"
 TIME g "|                                           |"
 TIME z "|*******************************************|"
+fi
 echo
 
 if [ "$USER" == "root" ]; then
