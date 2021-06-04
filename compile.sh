@@ -23,10 +23,11 @@ if [ -n "$(ls -A "webluci.sh" 2>/dev/null)" ]; then
 	rm -Rf openwrt
 else
 	Apt_get="NO"
+	rm -Rf openwrt
 fi
 echo
 echo
-if [[ "$Apt_get" == "NO" ]]; then
+if [[ "$Apt_get" == "YES" ]]; then
 TIME z "|*******************************************|"
 TIME g "|                                           |"
 TIME r "|     本脚本仅适用于在Ubuntu环境下编译      |"
