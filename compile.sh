@@ -125,7 +125,7 @@ case $CHOOSE in
 		firmware="Spirit_source"
 	break
 	;;
-	4)
+	5)
 		rm -rf AutoBuild-OpenWrt
 		exit 0
 	;;
