@@ -1,4 +1,5 @@
 #/bin/bash
+
 TIME() {
 [[ -z "$1" ]] && {
 	echo -ne " "
@@ -17,15 +18,6 @@ TIME() {
       }
 }
 echo
-echo
-TIME z "|*******************************************|"
-TIME g "|                                           |"
-TIME r "|     本脚本仅适用于在Ubuntu环境下编译      |"
-TIME g "|                                           |"
-TIME g "|*******************************************|"
-echo
-echo
-sleep 2s
 
 if [ "$USER" == "root" ]; then
 	echo
@@ -43,7 +35,7 @@ Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}'
 Ubuntu_kj="${Ubuntu_lv%?}"
 TIME z "您当前系统可用空间为${Ubuntu_kj}G"
 echo
-if [[ "${Ubuntu_kj}" -lt "30" ]];then
+if [[ "${Ubuntu_kj}" -lt "80" ]];then
 	TIME && read -p "可用空间小于 30G 编译容易出错,是否继续? [y/N]: " YN
 	case ${YN} in
 		[Yy])
@@ -61,6 +53,7 @@ if [[ "${Ubuntu_kj}" -lt "30" ]];then
 fi
 echo
 echo
+rm -Rf openwrt
 
 TIME g "1. Lede_source"
 echo
@@ -76,7 +69,7 @@ echo
 
 while :; do
 
-TIME && read -p "请选择源码？输入1-4选择然后回车,选择5回车为退出！ " CHOOSE
+TIME && read -p "请选择编译源码,输入[1、2、3、4]选择对应源码,[5]为退出： " CHOOSE
 
 case $CHOOSE in
 	1)
@@ -101,43 +94,72 @@ case $CHOOSE in
 esac
 done
 echo
+
+while :; do
+
+TIME && read -p "请选择是否需要执行 make menuconfig 增删插件命令? [y/N]: " MENU
+
+case $MENU in
+	[Yy])
+		Menuconfig="YES"
+	break
+	;;
+	[Nn])
+		Menuconfig="NO"
+	break
+	;;
+esac
+done
 echo
-TIME g "正在下载源码中,请耐心等候~~~"
+echo
+Github="${https://github.com/281677160/AutoBuild-OpenWrt}"
+Apidz="${Github##*com/}"
+Author="${Apidz%/*}"
+CangKu="${Apidz##*/}"
 echo
 if [[ $firmware == "Lede_source" ]]; then
-          ZZZ="package/lean/default-settings/files/zzz-default-settings"
+	  ZZZ="package/lean/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
-          REPO_BRANCH="master"
 elif [[ $firmware == "Lienol_source" ]]; then
-          ZZZ="package/default-settings/files/zzz-default-settings"
+	  ZZZ="package/default-settings/files/zzz-default-settings"
           OpenWrt_name="19.07"
-          REPO_BRANCH="19.07"
 elif [[ $firmware == "Project_source" ]]; then
-          ZZZ="package/emortal/default-settings/files/zzz-default-settings"
+	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
-          REPO_BRANCH="openwrt-18.06"
 elif [[ $firmware == "Spirit_source" ]]; then
-          ZZZ="package/emortal/default-settings/files/zzz-default-settings"
+	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="21.02"
-          REPO_BRANCH="openwrt-21.02"
 fi
+
+chmod -R +x openwrt/build/common
 chmod -R +x openwrt/build/${firmware}
+source openwrt/build/${firmware}/settings.ini
+
+Home="$PWD/openwrt"
+PATH1="$PWD/openwrt/build/${firmware}"
 
 rm -rf AutoBuild-OpenWrt
 echo
 TIME g "正在加载自定义文件,请耐心等候~~~"
 echo
 cd openwrt
+git pull
 if [[ "${REPO_BRANCH}" == "master" ]]; then
-          find . -name 'luci-app-netdata' -o -name 'luci-theme-argon' -o -name 'k3screenctrl' | xargs -i rm -rf {}
-	  sed -i 's/iptables -t nat/# iptables -t nat/g' "${ZZZ}"
+          source build/${firmware}/common.sh && Diy_lede
+          cp -Rf build/common/LEDE/files ./
+          cp -Rf build/common/LEDE/diy/* ./
 elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
-          find . -name 'luci-app-netdata' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
+          source build/${firmware}/common.sh && Diy_lienol
+          cp -Rf build/common/LIENOL/files ./
+          cp -Rf build/common/LIENOL/diy/* ./
 elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
-          find . -name 'luci-theme-argonv3' -o -name 'luci-app-argon-config' -o -name 'luci-theme-argon'  | xargs -i rm -rf {}
-          find . -name 'luci-theme-argonv2' -o -name 'luci-app-timecontrol' | xargs -i rm -rf {}
+          source build/${firmware}/common.sh && Diy_1806
+          cp -Rf build/common/PROJECT/files ./
+          cp -Rf build/common/PROJECT/diy/* ./
 elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
-          find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon'  | xargs -i rm -rf {}
+          source build/${firmware}/common.sh && Diy_2102
+          cp -Rf build/common/SPIRIT/files ./
+          cp -Rf build/common/SPIRIT/diy/* ./
 fi
 if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
           cp -Rf build/$firmware/diy/* ./
@@ -148,16 +170,41 @@ fi
 if [ -n "$(ls -A "build/$firmware/patches" 2>/dev/null)" ]; then
           find "build/$firmware/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -p1 --forward"
 fi
+if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
+          source Convert.sh
+fi
 echo
 TIME g "正在加载源和安装源,请耐心等候~~~"
 echo
-source build/$firmware/diy-part.sh
+source build/$firmware/$DIY_PART_SH
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
-[ -e build/$firmware/.config ] && mv build/$firmware/.config .config
-echo
-echo
-make menuconfig
+[ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
+if [[ "${REGULAR_UPDATE}" == "true" ]]; then
+          echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
+	  source build/$firmware/upgrade.sh && Diy_Part1
+fi
+find . -name 'LICENSE' -o -name 'README' -o -name 'README.md' | xargs -i rm -rf {}
+find . -name 'CONTRIBUTED.md' -o -name 'README_EN.md' | xargs -i rm -rf {}
+if [ "${Menuconfig}" == "YES" ]; then
+          make menuconfig
+else
+          TIME y ""
+fi
+make defconfig
+if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
+          echo "x86-64" > DEVICE_NAME
+          [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
+	  rm -rf DEVICE_NAME
+elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+          [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
+else
+          TARGET_PROFILE="armvirt"
+fi
+if [ "${REGULAR_UPDATE}" == "true" ]; then
+          source build/$firmware/upgrade.sh && Diy_Part2
+fi
 echo
 echo
 TIME y "*****10秒后开始编译*****"
@@ -169,16 +216,18 @@ echo
 echo
 sleep 8s
 TIME g "正在下载插件包"
-make -j8 download V=s
 make -j8 download
 echo
 TIME g "开始编译固件,时间有点长,请耐心等待..."
 echo
-make -j1 V=s
+make -j$(($(nproc) + 1)) V=s
 
 if [ "$?" == "0" ]; then
 TIME y "
 编译完成~~~
 初始用户名密码: root  root
 "
+fi
+if [[ "${REGULAR_UPDATE}" == "true" ]]; then
+    source build/${firmware}/upgrade.sh && Diy_Part3
 fi
