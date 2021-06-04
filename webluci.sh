@@ -27,32 +27,9 @@ if [ "$USER" == "root" ]; then
 	sleep 3s
 	exit 0
 fi
-echo
+
 df -h
 echo
-Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
-Ubuntu_kj="${Ubuntu_lv%?}"
-echo
-if [[ "${Ubuntu_kj}" -lt "80" ]];then
-	TIME z "您当前系统可用空间为${Ubuntu_kj}G"
-	echo ""
-	TIME && read -p "可用空间小于[ 30G ]编译容易出错,是否继续? [y/N]: " YN
-	case ${YN} in
-		[Yy])
-			echo ""
-		;;
-		[Nn]) 
-			echo ""
-			TIME r  "取消编译,请清理Ubuntu空间..."
-			echo ""
-			rm -rf AutoBuild-OpenWrt
-			sleep 3s
-			exit 0
-		;;
-	esac
-fi
-echo
-
 if [[ -n "$(ls -A "openwrt/Lede_source" 2>/dev/null)" ]]; then
           firmware="Lede_source"
 elif [[ -n "$(ls -A "openwrt/Lienol_source" 2>/dev/null)" ]]; then
@@ -86,6 +63,28 @@ case $GHYM in
 esac
 done
 echo
+Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
+Ubuntu_kj="${Ubuntu_lv%?}"
+echo
+if [[ "${Ubuntu_kj}" -lt "30" ]];then
+	echo
+	TIME z "您当前系统可用空间为${Ubuntu_kj}G"
+	echo ""
+	TIME && read -p "可用空间小于[ 30G ]编译容易出错,是否继续? [y/N]: " YN
+	case ${YN} in
+		[Yy])
+			echo ""
+		;;
+		[Nn]) 
+			echo ""
+			TIME r  "取消编译,请清理Ubuntu空间..."
+			echo ""
+			rm -rf AutoBuild-OpenWrt
+			sleep 3s
+			exit 0
+		;;
+	esac
+fi
 echo
 while :; do
 
