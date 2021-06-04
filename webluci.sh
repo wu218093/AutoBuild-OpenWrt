@@ -63,21 +63,16 @@ elif [[ -n "$(ls -A "Spirit_source" 2>/dev/null)" ]]; then
 fi
 echo
 
-while :; do
-
-TIME && read -p "你正在使用$firmware编译,是否更换源码? [y/N]: " GHYM
+TIME && read -p "你正在使用${firmware}编译,是否更换源码? [y/N]: " GHYM
 
 case $GHYM in
 	[Yy])
 		cd ../ && git clone https://github.com/281677160/AutoBuild-OpenWrt && bash AutoBuild-OpenWrt/compile.sh
-	break
 	;;
 	[Nn])
 		Menuconfig="NO"
-	break
 	;;
 esac
-done
 echo
 echo
 while :; do
