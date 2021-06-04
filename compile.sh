@@ -141,7 +141,7 @@ esac
 done
 echo
 echo
-TIME g "请输入后台地址[回车默认192.168.1.1]" && read -p " 请输入后台地址：" ip
+TIME g "请输入后台地址[ 直接回车默认192.168.1.1 ]" && read -p " 请输入后台地址：" ip
 ip=${ip:-"192.168.1.1"}
 echo
 TIME y "您的后台地址为: $ip"
@@ -189,7 +189,7 @@ done
 echo
 echo
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-TIME g "请输入Github地址[回车默认https://github.com/281677160/AutoBuild-OpenWrt]"  && read -p " 请输入地址: " Github
+TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入地址: " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
 echo
