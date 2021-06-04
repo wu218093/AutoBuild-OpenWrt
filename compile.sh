@@ -173,10 +173,10 @@ case $RELE in
 esac
 done
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-read -p "请输入Github地址[回车默认https://github.com/281677160/AutoBuild-OpenWrt]: " ip
+read -p "请输入Github地址[回车默认https://github.com/281677160/AutoBuild-OpenWrt]: " Github
 ip=${ip:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
-echo "您的Github地址为: $ip"
+echo "您的Github地址为: $Github"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
