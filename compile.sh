@@ -120,12 +120,6 @@ case $CHOOSE in
 esac
 done
 echo
-echo
-TIME y "1. 执行make menuconfig"
-echo
-TIME r "2. 不执行make menuconfig"
-echo
-echo
 
 while :; do
 
