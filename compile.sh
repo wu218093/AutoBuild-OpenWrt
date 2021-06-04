@@ -1,7 +1,7 @@
 #/bin/bash
 
-if [ -z "$(ls -A "openwrt/compile" 2>/dev/null)" ]; then
-	source AutoBuild-OpenWrt/compile.sh && Install_openwrt
+if [ -z "$(ls -A "./openwrt/compile" 2>/dev/null)" ]; then
+	source ./AutoBuild-OpenWrt/compile.sh && Install_openwrt
 else
 	exit 0
 fi
