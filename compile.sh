@@ -203,24 +203,27 @@ if [[ $firmware == "Lede_source" ]]; then
           git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
 	  ZZZ="package/lean/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
+	  REPO_BRANCH="master"
 	  echo "compile" > openwrt/Lede_source
 elif [[ $firmware == "Lienol_source" ]]; then
           git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
 	  ZZZ="package/default-settings/files/zzz-default-settings"
           OpenWrt_name="19.07"
+	  REPO_BRANCH="19.07"
 	  echo "compile" > openwrt/Lienol_source
 elif [[ $firmware == "Project_source" ]]; then
           git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
 	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
+	  REPO_BRANCH="openwrt-18.06"
 	  echo "compile" > openwrt/Project_source
 elif [[ $firmware == "Spirit_source" ]]; then
           git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
 	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="21.02"
+	  REPO_BRANCH="openwrt-21.02"
 	  echo "compile" > openwrt/Spirit_source
 fi
-
 cp -Rf AutoBuild-OpenWrt/webluci.sh openwrt
 chmod -R +x openwrt/webluci.sh
 cp -Rf AutoBuild-OpenWrt/build openwrt/build
@@ -289,9 +292,7 @@ sed -i '/CYXluq4wUazHjmCDBCqXF/d' $ZZZ
 echo
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
-cp build/$firmware/.config .config
-echo >> .config
-cat build/$firmware/.config >> .config
+cp -rf build/${firmware}/.config .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 	  source build/$firmware/upgrade.sh && Diy_Part1
