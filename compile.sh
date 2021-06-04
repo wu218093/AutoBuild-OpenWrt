@@ -159,16 +159,15 @@ echo
 echo
 while :; do
 
-TIME && read -p "是否定时更新插件编译进固件,要定时更新得把固件上传在github的Releases? [y/N]: " MENU
+TIME && read -p "是否定时更新插件编译进固件,要定时更新得把固件上传在github的Releases? [y/N]: " RELE
 
-case $MENU in
+case $RELE in
 	[Yy])
 		REGULAR_UPDATE="true"
 	break
 	;;
 	[Nn])
 		REGULAR_UPDATE="false"
-		Github="${https://github.com/281677160/AutoBuild-OpenWrt}"
 	break
 	;;
 esac
@@ -178,10 +177,10 @@ read -p "请输入Github地址[回车默认https://github.com/281677160/AutoBuil
 ip=${ip:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
 echo "您的Github地址为: $ip"
-fi
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
+fi
 TIME g "正在下载源码中,请耐心等候~~~"
 echo
 if [[ $firmware == "Lede_source" ]]; then
@@ -212,7 +211,6 @@ cp -Rf AutoBuild-OpenWrt/build openwrt/build
 git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/common
 chmod -R +x openwrt/build/common
 chmod -R +x openwrt/build/${firmware}
-source openwrt/build/${firmware}/settings.ini
 
 Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
@@ -274,7 +272,7 @@ sed -i "/uci commit network/i\uci set network.lan.ipaddr='$ip'" $ZZZ
 echo
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
-[ -e build/$firmware/$CONFIG_FILE ] && mv build/$firmware/$CONFIG_FILE .config
+[ -e build/$firmware/.config ] && mv build/$firmware/.config .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 	  source build/$firmware/upgrade.sh && Diy_Part1
