@@ -70,9 +70,9 @@ echo
 echo
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
 Ubuntu_kj="${Ubuntu_lv%?}"
-TIME z "您当前系统可用空间为${Ubuntu_kj}G"
 echo
 if [[ "${Ubuntu_kj}" -lt "30" ]];then
+	TIME r "您当前系统可用空间为${Ubuntu_kj}G"
 	TIME && read -p "可用空间小于 30G 编译容易出错,是否继续? [y/N]: " YN
 	case ${YN} in
 		[Yy])
@@ -91,11 +91,11 @@ fi
 echo
 echo
 
-TIME g "1. Lede_source"
+TIME z "1. Lede_source"
 echo
 TIME g "2. Lienol_source"
 echo
-TIME g "3. Project_source"
+TIME z "3. Project_source"
 echo
 TIME g "4. Spirit_source"
 echo
@@ -105,26 +105,30 @@ echo
 
 while :; do
 
-TIME z "请选择编译源码,输入[1、2、3、4]然后回车确认您的选择,输入[5]回车为退出程序" && read -p " 输入您的选择： " CHOOSE
+TIME g "请选择编译源码,输入[1、2、3、4]然后回车确认您的选择,输入[5]回车为退出程序" && read -p " 输入您的选择： " CHOOSE
 
 case $CHOOSE in
 	1)
 		firmware="Lede_source"
+		echo
 		TIME y "您选择了: $firmware"
 	break
 	;;
 	2)
 		firmware="Lienol_source"
+		echo
 		TIME y "您选择了: $firmware"
 	break
 	;;
 	3)
 		firmware="Project_source"
+		echo
 		TIME y "您选择了: $firmware"
 	break
 	;;
 	4)
 		firmware="Spirit_source"
+		echo
 		TIME y "您选择了: $firmware"
 	break
 	;;
@@ -151,12 +155,14 @@ TIME g "是否需要执行[make menuconfig]命令来增删插件?" && read -p " 
 case $MENU in
 	[Yy])
 		Menuconfig="YES"
+		echo
 		TIME y "您选择了执行[make menuconfig]命令"
 	break
 	;;
 	[Nn])
 		Menuconfig="NO"
-		TIME  "您放弃执行[make menuconfig]命令"
+		echo
+		TIME r "您放弃执行[make menuconfig]命令"
 	break
 	;;
 esac
@@ -165,7 +171,7 @@ echo
 echo
 while :; do
 
-TIME y "是否把定时更新插件编译进固件,要定时更新得把固件上传在github的Releases?"  && read -p " [Y/y确认，N/n否定]: " RELE
+TIME g "是否把定时更新插件编译进固件,要定时更新得把固件上传在github的Releases?"  && read -p " [Y/y确认，N/n否定]: " RELE
 
 case $RELE in
 	[Yy])
@@ -174,7 +180,8 @@ case $RELE in
 	;;
 	[Nn])
 		REGULAR_UPDATE="false"
-		TIME y "您放弃了把定时更新插件编译进固件"
+		echo
+		TIME r "您放弃了把定时更新插件编译进固件"
 	break
 	;;
 esac
@@ -186,7 +193,7 @@ TIME g "请输入Github地址[回车默认https://github.com/281677160/AutoBuild
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
 echo
-TIME b "您的Github地址为: $Github"
+TIME y "您的Github地址为: $Github"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
