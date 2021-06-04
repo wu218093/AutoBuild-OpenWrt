@@ -22,8 +22,6 @@ TIME z "|*******************************************|"
 TIME g "|                                           |"
 TIME r "|     本脚本仅适用于在Ubuntu环境下编译      |"
 TIME g "|                                           |"
-TIME y "|    首次编译,请输入Ubuntu密码继续下一步    |"
-TIME g "|                                           |"
 TIME g "|*******************************************|"
 echo
 echo
@@ -63,7 +61,6 @@ if [[ "${Ubuntu_kj}" -lt "30" ]];then
 fi
 echo
 echo
-rm -Rf openwrt
 
 TIME g "1. Lede_source"
 echo
@@ -108,31 +105,22 @@ echo
 TIME g "正在下载源码中,请耐心等候~~~"
 echo
 if [[ $firmware == "Lede_source" ]]; then
-          git clone -b master --single-branch https://github.com/coolsnowwolf/lede openwrt
-          git clone https://github.com/fw876/helloworld openwrt/package/luci-app-ssr-plus
-          git clone https://github.com/xiaorouji/openwrt-passwall openwrt/package/luci-app-passwall
           ZZZ="package/lean/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
           REPO_BRANCH="master"
 elif [[ $firmware == "Lienol_source" ]]; then
-          git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
-          git clone https://github.com/fw876/helloworld openwrt/package/luci-app-ssr-plus
-          git clone https://github.com/xiaorouji/openwrt-passwall openwrt/package/luci-app-passwall
           ZZZ="package/default-settings/files/zzz-default-settings"
           OpenWrt_name="19.07"
           REPO_BRANCH="19.07"
 elif [[ $firmware == "Project_source" ]]; then
-          git clone -b openwrt-18.06 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
           ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
           REPO_BRANCH="openwrt-18.06"
 elif [[ $firmware == "Spirit_source" ]]; then
-          git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrt
           ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="21.02"
           REPO_BRANCH="openwrt-21.02"
 fi
-cp -Rf AutoBuild-OpenWrt/build openwrt/build
 chmod -R +x openwrt/build/${firmware}
 
 rm -rf AutoBuild-OpenWrt
@@ -140,7 +128,6 @@ echo
 TIME g "正在加载自定义文件,请耐心等候~~~"
 echo
 cd openwrt
-./scripts/feeds clean && ./scripts/feeds update -a
 if [[ "${REPO_BRANCH}" == "master" ]]; then
           find . -name 'luci-app-netdata' -o -name 'luci-theme-argon' -o -name 'k3screenctrl' | xargs -i rm -rf {}
 	  sed -i 's/iptables -t nat/# iptables -t nat/g' "${ZZZ}"
@@ -152,8 +139,6 @@ elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
 elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon'  | xargs -i rm -rf {}
 fi
-git clone -b "${REPO_BRANCH}" https://github.com/281677160/openwrt-package
-cp -Rf openwrt-package/* ./ && rm -rf openwrt-package
 if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
           cp -Rf build/$firmware/diy/* ./
 fi
