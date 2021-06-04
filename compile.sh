@@ -289,7 +289,9 @@ sed -i '/CYXluq4wUazHjmCDBCqXF/d' $ZZZ
 echo
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
-[ -e build/$firmware/.config ] && mv build/$firmware/.config .config
+cp build/$firmware/.config .config
+echo >> .config
+cat build/$firmware/.config >> .config
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 	  source build/$firmware/upgrade.sh && Diy_Part1
