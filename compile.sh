@@ -267,13 +267,10 @@ else
 fi
 make defconfig
 cp -rf .config .config_bf
-if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
-          echo "x86-64" > DEVICE_NAME
-          [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
-	  rm -rf DEVICE_NAME
-elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
-          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-          [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
+if [[ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]]; then
+          TARGET_PROFILE="x86-64"
+elif [[ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]]; then
+          TARGET_PROFILE="$(egrep -o "CONFIG_TARGET.*DEVICE.*=y" .config | sed -r 's/.*DEVICE_(.*)=y/\1/')"
 else
           TARGET_PROFILE="armvirt"
 fi
