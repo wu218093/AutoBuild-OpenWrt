@@ -18,8 +18,9 @@ TIME() {
       }
 }
 
-if [ -z "$(ls -A "webluci.sh" 2>/dev/null)" ]; then
+if [ -n "$(ls -A "webluci.sh" 2>/dev/null)" ]; then
 	Apt_get="YES"
+	rm -Rf openwrt
 else
 	Apt_get="NO"
 fi
