@@ -121,6 +121,29 @@ esac
 done
 echo
 echo
+TIME y "1. 执行make menuconfig"
+echo
+TIME r "2. 不执行make menuconfig"
+echo
+echo
+
+while :; do
+
+TIME && read -p "请选择是否需要执行 make menuconfig 增删插件命令！ " MENU
+
+case $MENU in
+	1)
+		Menuconfig="YES"
+	break
+	;;
+	2)
+		Menuconfig="NO"
+	break
+	;;
+esac
+done
+echo
+echo
 Github="${https://github.com/281677160/AutoBuild-OpenWrt}"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
@@ -203,20 +226,11 @@ if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           echo "Compile_Date=$(date +%Y%m%d%H%M)" > Openwrt.info
 	  source build/$firmware/upgrade.sh && Diy_Part1
 fi
-echo
-echo
-TIME && read -p "是否增删插件? [y/N]: " CJYN
-case ${CJYN} in
-	[Yy])
-		make menuconfig
-	;;
-	[Nn]) 
-		echo ""
-		TIME y "取消增删插件,继续编译固件..."
-	;;
-esac
-echo
-echo
+if [ "${Menuconfig}" == "YES" ]; then
+          make menuconfig
+else
+          TIME y ""
+fi
 make defconfig
 if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
           echo "x86-64" > DEVICE_NAME
