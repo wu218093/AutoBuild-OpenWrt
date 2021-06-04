@@ -105,23 +105,27 @@ echo
 
 while :; do
 
-TIME && read -p "请选择编译源码,输入[1、2、3、4]选择对应源码,[5]为退出： " CHOOSE
+TIME z "请选择编译源码,输入[1、2、3、4]然后回车确认您的选择,输入[5]回车为退出程序" && read -p " 输入您的选择： " CHOOSE
 
 case $CHOOSE in
 	1)
 		firmware="Lede_source"
+		TIME y "您选择了: $firmware"
 	break
 	;;
 	2)
 		firmware="Lienol_source"
+		TIME y "您选择了: $firmware"
 	break
 	;;
 	3)
 		firmware="Project_source"
+		TIME y "您选择了: $firmware"
 	break
 	;;
 	4)
 		firmware="Spirit_source"
+		TIME y "您选择了: $firmware"
 	break
 	;;
 	5)
@@ -133,24 +137,26 @@ esac
 done
 echo
 echo
-read -p "请输入后台地址[回车默认192.168.1.1]: " ip
+TIME g "请输入后台地址[回车默认192.168.1.1]" && read -p " 请输入后台地址：" ip
 ip=${ip:-"192.168.1.1"}
 echo
-echo "您的后台地址为: $ip"
+TIME y "您的后台地址为: $ip"
 echo
 echo
 
 while :; do
 
-TIME && read -p "是否需要执行[make menuconfig]命令来增删插件? [y/N]: " MENU
+TIME g "是否需要执行[make menuconfig]命令来增删插件?" && read -p " [Y/y确认，N/n否定]: " MENU
 
 case $MENU in
 	[Yy])
 		Menuconfig="YES"
+		TIME y "您选择了执行[make menuconfig]命令"
 	break
 	;;
 	[Nn])
 		Menuconfig="NO"
+		TIME  "您放弃执行[make menuconfig]命令"
 	break
 	;;
 esac
@@ -159,7 +165,7 @@ echo
 echo
 while :; do
 
-TIME && read -p "是否定时更新插件编译进固件,要定时更新得把固件上传在github的Releases? [y/N]: " RELE
+TIME y "是否把定时更新插件编译进固件,要定时更新得把固件上传在github的Releases?"  && read -p " [Y/y确认，N/n否定]: " RELE
 
 case $RELE in
 	[Yy])
@@ -168,19 +174,25 @@ case $RELE in
 	;;
 	[Nn])
 		REGULAR_UPDATE="false"
+		TIME y "您放弃了把定时更新插件编译进固件"
 	break
 	;;
 esac
 done
-if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-read -p "请输入Github地址[回车默认https://github.com/281677160/AutoBuild-OpenWrt]: " Github
-ip=${ip:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
-echo "您的Github地址为: $Github"
+echo
+if [[ "${REGULAR_UPDATE}" == "true" ]]; then
+TIME g "请输入Github地址[回车默认https://github.com/281677160/AutoBuild-OpenWrt]"  && read -p " 请输入地址: " Github
+Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
+echo
+echo
+TIME b "您的Github地址为: $Github"
 Apidz="${Github##*com/}"
 Author="${Apidz%/*}"
 CangKu="${Apidz##*/}"
 fi
+echo
+echo
 TIME g "正在下载源码中,请耐心等候~~~"
 echo
 if [[ $firmware == "Lede_source" ]]; then
