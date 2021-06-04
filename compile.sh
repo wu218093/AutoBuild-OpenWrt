@@ -301,8 +301,15 @@ make -j1 V=s
 
 if [ "$?" == "0" ]; then
 TIME y "
+
 编译完成~~~
-初始用户名密码: root  root
+
+初始后台地址: $ip
+
+用户名: root
+
+密 码: 无
+
 "
 fi
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
