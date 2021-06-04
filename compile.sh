@@ -138,7 +138,7 @@ esac
 done
 echo
 echo
-TIME g "请输入后台地址[ 直接回车默认192.168.1.1 ]" && read -p " 请输入后台地址：" ip
+TIME g "请输入后台地址[ 直接回车默认192.168.1.1 ]" && read -p " 请输入后台IP地址：" ip
 ip=${ip:-"192.168.1.1"}
 echo
 TIME y "您的后台地址为：$ip"
@@ -186,7 +186,7 @@ done
 echo
 echo
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入地址： " Github
+TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入Github地址： " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
 echo
@@ -271,6 +271,7 @@ if [[ "${REPO_BRANCH}" =~ (21.02|openwrt-21.02) ]]; then
 fi
 echo
 TIME g "正在加载源和安装源,请耐心等候~~~"
+echo
 sed -i 's/"aMule设置"/"电驴下载"/g' `grep "aMule设置" -rl ./`
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
@@ -285,6 +286,7 @@ sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl .
 sed -i "/uci commit fstab/a\uci commit network" $ZZZ
 sed -i "/uci commit network/i\uci set network.lan.ipaddr='$ip'" $ZZZ
 sed -i '/CYXluq4wUazHjmCDBCqXF/d' $ZZZ
+echo
 ./scripts/feeds update -a && ./scripts/feeds install -a
 ./scripts/feeds install -a
 cp -rf build/${firmware}/.config .config
