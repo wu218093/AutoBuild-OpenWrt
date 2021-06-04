@@ -91,13 +91,13 @@ fi
 echo
 echo
 
-TIME z "1. Lede_source"
+TIME g "1. Lede_source"
 echo
-TIME g "2. Lienol_source"
+TIME z "2. Lienol_source"
 echo
-TIME z "3. Project_source"
+TIME g "3. Project_source"
 echo
-TIME g "4. Spirit_source"
+TIME z "4. Spirit_source"
 echo
 TIME r "5. Exit"
 echo
