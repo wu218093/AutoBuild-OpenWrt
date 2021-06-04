@@ -62,10 +62,21 @@ elif [[ -n "$(ls -A "openwrt/Project_source" 2>/dev/null)" ]]; then
 elif [[ -n "$(ls -A "openwrt/Spirit_source" 2>/dev/null)" ]]; then
           firmware="Spirit_source"
 fi
+if [ `grep -c "CONFIG_TARGET_x86_64=y" openwrt/.config` -eq '1' ]; then
+          echo "x86-64" > DEVICE_NAME
+          [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
+	  rm -rf DEVICE_NAME
+elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" openwrt/.config` -eq '1' ]; then
+          grep '^CONFIG_TARGET.*DEVICE.*=y' openwrt/.config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+          [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
+	  rm -rf DEVICE_NAME
+else
+          TARGET_PROFILE="armvirt"
+fi
 echo
 while :; do
 
-TIME && read -p "你正在使用[ ${firmware} ]编译固件,是否需要更换源码? [y/N]: " GHYM
+TIME && read -p "你正在使用[ ${firmware} ]编译[ ${TARGET_PROFILE} ]固件,是否需要更换源码? [y/N]: " GHYM
 
 case $GHYM in
 	[Yy])
@@ -173,16 +184,7 @@ else
           TIME y ""
 fi
 make defconfig
-if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
-          echo "x86-64" > DEVICE_NAME
-          [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
-	  rm -rf DEVICE_NAME
-elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
-          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-          [ -s DEVICE_NAME ] && TARGET_PROFILE="$(cat DEVICE_NAME)"
-else
-          TARGET_PROFILE="armvirt"
-fi
+
 if [ "${REGULAR_UPDATE}" == "true" ]; then
           source build/$firmware/upgrade.sh && Diy_Part2
 fi
