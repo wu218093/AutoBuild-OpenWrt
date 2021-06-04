@@ -1,12 +1,5 @@
 #/bin/bash
 
-if [ -z "$(ls -A "./openwrt/compile" 2>/dev/null)" ]; then
-	source ./AutoBuild-OpenWrt/compile.sh && Install_openwrt
-else
-	exit 0
-fi
-
-Install_openwrt() {
 TIME() {
 [[ -z "$1" ]] && {
 	echo -ne " "
@@ -275,4 +268,3 @@ fi
 if [[ "${REGULAR_UPDATE}" == "true" ]]; then
     source build/${firmware}/upgrade.sh && Diy_Part3
 fi
-}
