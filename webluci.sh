@@ -52,7 +52,33 @@ if [[ "${Ubuntu_kj}" -lt "30" ]];then
 fi
 echo
 
+if [[ -n "$(ls -A "Lede_source" 2>/dev/null)" ]]; then
+          firmware="Lede_source"
+elif [[ -n "$(ls -A "Lienol_source" 2>/dev/null)" ]]; then
+          firmware="Lienol_source"
+elif [[ -n "$(ls -A "Project_source" 2>/dev/null)" ]]; then
+          firmware="Project_source"
+elif [[ -n "$(ls -A "Spirit_source" 2>/dev/null)" ]]; then
+          firmware="Spirit_source"
+fi
+echo
 
+while :; do
+
+TIME && read -p "你正在使用$firmware编译,是否更换源码? [y/N]: " GHYM
+
+case $GHYM in
+	[Yy])
+		cd ../ && git clone https://github.com/281677160/AutoBuild-OpenWrt && bash AutoBuild-OpenWrt/compile.sh
+	break
+	;;
+	[Nn])
+		Menuconfig="NO"
+	break
+	;;
+esac
+done
+echo
 echo
 while :; do
 
