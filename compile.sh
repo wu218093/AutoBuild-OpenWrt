@@ -90,7 +90,6 @@ if [[ "${Ubuntu_kj}" -lt "30" ]];then
 fi
 echo
 echo
-rm -Rf openwrt
 
 TIME g "1. Lede_source"
 echo
