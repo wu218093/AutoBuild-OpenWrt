@@ -167,7 +167,7 @@ elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
 elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon'  | xargs -i rm -rf {}
 fi
-git clone -b "${REPO_BRANCH}" https://github.com/281677160/openwrt-package
+git clone https://github.com/281677160/openwrt-package
 cp -Rf openwrt-package/* ./ && rm -rf openwrt-package
 if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
           cp -Rf build/$firmware/diy/* ./
