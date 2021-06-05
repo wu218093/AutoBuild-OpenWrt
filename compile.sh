@@ -227,7 +227,7 @@ git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/co
 chmod -R +x openwrt/build/common
 chmod -R +x openwrt/build/${firmware}
 source openwrt/build/${firmware}/settings.ini
-REGULAR_UPDATE="REG_UPDATE"
+REGULAR_UPDATE="${REG_UPDATE}"
 Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
 
