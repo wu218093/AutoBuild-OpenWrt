@@ -66,11 +66,11 @@ echo
 Ubuntu_lv="$(df -h | grep "/dev/mapper/ubuntu--vg-ubuntu--lv" | awk '{print $4}' | awk 'NR==1')"
 Ubuntu_kj="${Ubuntu_lv%?}"
 echo
-if [[ "${Ubuntu_kj}" -lt "30" ]];then
+if [[ "${Ubuntu_kj}" -lt "20" ]];then
 	echo
 	TIME z "您当前系统可用空间为${Ubuntu_kj}G"
 	echo ""
-	TIME && read -p "可用空间小于[ 30G ]编译容易出错,是否继续? [y/N]: " YN
+	TIME && read -p "可用空间小于[ 20G ]编译容易出错,是否继续? [y/N]: " YN
 	case ${YN} in
 		[Yy])
 			echo ""
@@ -88,7 +88,7 @@ fi
 echo
 while :; do
 
-TIME g "是否把定时更新插件编译进固件,要定时更新得把固件上传在github的Releases?"  && read -p " [Y/y确认，N/n否定]： " RELE
+TIME g "是否把定时更新插件编译进固件?"  && read -p " [Y/y确认，N/n否定]： " RELE
 
 case $RELE in
 	[Yy])
@@ -106,7 +106,7 @@ done
 echo
 echo
 if [[ "${REG_UPDATE}" == "true" ]]; then
-TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入Github地址： " Github
+TIME g "填写Github地址,比如：https://github.com/281677160/AutoBuild-OpenWrt"  && read -p " 请输入Github地址： " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
 echo
@@ -119,7 +119,7 @@ echo
 echo
 while :; do
 
-TIME g "是否需要执行[make menuconfig]命令来增删插件?" && read -p " [Y/y确认，N/n否定]： " MENU
+TIME g "是否需要增删插件?" && read -p " [Y/y确认，N/n否定]： " MENU
 
 case $MENU in
 	[Yy])
