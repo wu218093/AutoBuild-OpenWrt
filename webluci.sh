@@ -154,8 +154,8 @@ fi
 git clone --depth 1 -b main https://github.com/281677160/common
 chmod -R +x common
 cp -Rf common/* ./openwrt/build/common
-mv -f openwrt/build/common/Convert.sh openwrt
-mv -f openwrt/build/common/*.sh openwrt/build/${firmware}
+mv -f openwrt/build/common/Convert.sh openwrt > /dev/null 2>&1
+mv -f openwrt/build/common/*.sh openwrt/build/${firmware} > /dev/null 2>&1
 rm -rf common
 chmod -R +x openwrt/build/${firmware}
 source openwrt/build/${firmware}/settings.ini
