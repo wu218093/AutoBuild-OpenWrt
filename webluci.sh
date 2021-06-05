@@ -192,6 +192,7 @@ if [[ ${REGULAR_UPDATE} == "true" ]]; then
           cp -Rf  build/$firmware/AutoUpdate.sh package/base-files/files/bin
 fi
 cp -Rf openwrt-package/* ./ && rm -rf openwrt-package
+cp -Rf build/$firmware/AutoBuild_Tools.sh package/base-files/files/bin
 if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
           cp -Rf build/$firmware/diy/* ./
 fi
