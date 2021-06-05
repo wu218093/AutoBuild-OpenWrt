@@ -93,6 +93,7 @@ TIME g "是否把定时更新插件编译进固件?"  && read -p " [Y/y确认，
 case $RELE in
 	[Yy])
 		REG_UPDATE="true"
+		rm -rf bin/Firmware
 	break
 	;;
 	[Nn])
