@@ -53,7 +53,7 @@ TIME g "你正在使用[ ${firmware} ]编译[ ${TARGET_PROFILE} ]固件,是否�
 
 case $GHYM in
 	[Yy])
-		git clone https://github.com/281677160/AutoBuild-OpenWrt && bash AutoBuild-OpenWrt/compile.sh
+		wget -O compile.sh https://raw.githubusercontent.com/281677160/AutoBuild-OpenWrt/main/compile.sh && chmod -R +x compile.sh && bash compile.sh
 	break
 	;;
 	[Nn])
