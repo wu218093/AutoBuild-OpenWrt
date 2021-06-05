@@ -247,7 +247,7 @@ echo -e "$(($(nproc)+1)) thread compile"
 make -j$(($(nproc)+1)) || make -j1 V=s
 
 if [ "$?" == "0" ]; then
-TIME y "
+TIME  "
 编译完成~~~
 "
 fi
