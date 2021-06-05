@@ -249,8 +249,8 @@ Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
 
 rm -rf compile.sh
-mv -f openwrt/build/common/{Convert.sh,recompile.sh,compile.sh} openwrt > /dev/null 2>&1
-mv -f openwrt/build/common/*.sh openwrt/build/${firmware} > /dev/null 2>&1
+mv -f openwrt/build/common/{Convert.sh,recompile.sh,compile.sh} openwrt
+mv -f openwrt/build/common/*.sh openwrt/build/${firmware}
 echo
 TIME g "正在加载自定义文件,请耐心等候~~~"
 echo
