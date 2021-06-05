@@ -220,9 +220,9 @@ elif [[ $firmware == "Spirit_source" ]]; then
           OpenWrt_name="21.02"
 	  echo "compile" > openwrt/Spirit_source
 fi
-cp -Rf AutoBuild-OpenWrt/webluci.sh openwrt
+curl -fsSL https://raw.githubusercontent.com/281677160/AutoBuild-OpenWrt/main/webluci.sh > openwrt/webluci.sh
 chmod -R +x openwrt/webluci.sh
-cp -Rf AutoBuild-OpenWrt/build openwrt/build
+svn co https://github.com/281677160/AutoBuild-OpenWrt/trunk/build openwrt/build
 git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/common
 chmod -R +x openwrt/build/common
 chmod -R +x openwrt/build/${firmware}
