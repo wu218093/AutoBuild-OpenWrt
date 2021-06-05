@@ -249,11 +249,11 @@ make -j8 download
 echo
 TIME g "3秒后开始编译固件,时间有点长,请耐心等待..."
 sleep 2s
-echo -e "$(($(nproc)+1)) thread compile"
-make -j$(($(nproc)+1)) || make -j1 V=s
+
+make -j$(($(nproc) + 1)) V=s
 
 if [ "$?" == "0" ]; then
-TIME  "
+TIME g "
 编译完成~~~
 "
 fi
