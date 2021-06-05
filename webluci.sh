@@ -159,7 +159,7 @@ fi
 chmod -R +x openwrt/build/common
 chmod -R +x openwrt/build/${firmware}
 source openwrt/build/${firmware}/settings.ini
-REGULAR_UPDATE="REG_UPDATE"
+REGULAR_UPDATE="${REG_UPDATE}"
 
 Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
@@ -186,6 +186,7 @@ elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           cp -Rf build/common/SPIRIT/files ./
           cp -Rf build/common/SPIRIT/diy/* ./
 fi
+source build/$firmware/common.sh && Diy_all
 if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
           cp -Rf build/$firmware/diy/* ./
 fi
