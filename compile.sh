@@ -17,6 +17,25 @@ TIME() {
 	 }
       }
 }
+if [[ "${GengGai}" == "true" ]]; then
+	while :; do
+
+	TIME g "确定需要更改源码重新编译?" && read -p " [Y/y确认，N/n否定]： " GENG
+
+	case $GENG in
+		[Yy])
+			echo
+		break
+		;;
+		[Nn])
+			rm -rf compile.sh
+			sleep 2s
+			exit 0
+		break
+		;;
+	esac
+	done
+fi
 
 if [ -n "$(ls -A "openwrt/webluci.sh" 2>/dev/null)" ]; then
 	Apt_get="YES"
@@ -220,8 +239,6 @@ elif [[ $firmware == "Spirit_source" ]]; then
           OpenWrt_name="21.02"
 	  echo "compile" > openwrt/Spirit_source
 fi
-curl -fsSL https://raw.githubusercontent.com/281677160/AutoBuild-OpenWrt/main/webluci.sh > openwrt/webluci.sh
-chmod -R +x openwrt/webluci.sh
 svn co https://github.com/281677160/AutoBuild-OpenWrt/trunk/build openwrt/build
 git clone --depth 1 -b main https://github.com/281677160/common openwrt/build/common
 chmod -R +x openwrt/build/common
@@ -232,7 +249,7 @@ Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
 
 rm -rf compile.sh
-mv -f openwrt/build/common/Convert.sh openwrt > /dev/null 2>&1
+mv -f openwrt/build/common/{Convert.sh,recompile.sh,compile.sh} openwrt > /dev/null 2>&1
 mv -f openwrt/build/common/*.sh openwrt/build/${firmware} > /dev/null 2>&1
 echo
 TIME g "正在加载自定义文件,请耐心等候~~~"
