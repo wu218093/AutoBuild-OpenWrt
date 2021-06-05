@@ -231,7 +231,7 @@ REGULAR_UPDATE="${REG_UPDATE}"
 Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
 
-rm -rf AutoBuild-OpenWrt
+rm -rf compile.sh
 mv -f openwrt/build/common/Convert.sh openwrt > /dev/null 2>&1
 mv -f openwrt/build/common/*.sh openwrt/build/${firmware} > /dev/null 2>&1
 echo
