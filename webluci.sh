@@ -137,11 +137,6 @@ case $MENU in
 esac
 done
 echo
-Github="${https://github.com/281677160/AutoBuild-OpenWrt}"
-Apidz="${Github##*com/}"
-Author="${Apidz%/*}"
-CangKu="${Apidz##*/}"
-echo
 if [[ $firmware == "Lede_source" ]]; then
 	  ZZZ="package/lean/default-settings/files/zzz-default-settings"
           OpenWrt_name="18.06"
