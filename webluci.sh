@@ -93,7 +93,7 @@ TIME g "是否把定时更新插件编译进固件?"  && read -p " [Y/y确认，
 case $RELE in
 	[Yy])
 		REG_UPDATE="true"
-		rm -rf bin/Firmware
+		rm -rf openwrt/bin/Firmware
 	break
 	;;
 	[Nn])
@@ -126,7 +126,7 @@ case $MENU in
 	[Yy])
 		Menuconfig="YES"
 		echo
-		TIME y "您选择了执行[make menuconfig]命令!"
+		TIME y "您执行[make menuconfig]增删插件命令!"
 	break
 	;;
 	[Nn])
