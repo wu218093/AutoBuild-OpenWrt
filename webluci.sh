@@ -168,7 +168,7 @@ TIME g "正在加载自定义文件,请耐心等候~~~"
 echo
 cd openwrt
 git pull
-rm -rf package{luci-app-passwall,luci-app-ssr-plus}
+rm -rf package/{luci-app-passwall,luci-app-ssr-plus}
 if [[ "${REPO_BRANCH}" == "master" ]]; then
           source build/${firmware}/common.sh && Diy_lede
           cp -Rf build/common/LEDE/files ./
