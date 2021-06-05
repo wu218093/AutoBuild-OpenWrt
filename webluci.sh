@@ -150,8 +150,12 @@ elif [[ $firmware == "Spirit_source" ]]; then
 	  ZZZ="package/emortal/default-settings/files/zzz-default-settings"
           OpenWrt_name="21.02"
 fi
-
-chmod -R +x openwrt/build/common
+git clone --depth 1 -b main https://github.com/281677160/common
+chmod -R +x common
+cp -Rf common/* ./openwrt/build/common
+mv -f openwrt/build/common/Convert.sh openwrt
+mv -f openwrt/build/common/*.sh openwrt/build/${firmware}
+rm -rf common
 chmod -R +x openwrt/build/${firmware}
 source openwrt/build/${firmware}/settings.ini
 REGULAR_UPDATE="${REG_UPDATE}"
@@ -164,6 +168,7 @@ TIME g "正在加载自定义文件,请耐心等候~~~"
 echo
 cd openwrt
 git pull
+rm -rf package{luci-app-passwall,luci-app-ssr-plus}
 if [[ "${REPO_BRANCH}" == "master" ]]; then
           source build/${firmware}/common.sh && Diy_lede
           cp -Rf build/common/LEDE/files ./
@@ -181,7 +186,12 @@ elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           cp -Rf build/common/SPIRIT/files ./
           cp -Rf build/common/SPIRIT/diy/* ./
 fi
-source build/$firmware/common.sh && Diy_all
+git clone --depth 1 -b "${REPO_BRANCH}" https://github.com/281677160/openwrt-package
+if [[ ${REGULAR_UPDATE} == "true" ]]; then
+          svn co https://github.com/281677160/luci-app-autoupdate/trunk openwrt-package/feeds/luci/applications/luci-app-autoupdate
+          cp -Rf  build/$firmware/AutoUpdate.sh package/base-files/files/bin
+fi
+cp -Rf openwrt-package/* ./ && rm -rf openwrt-package
 if [ -n "$(ls -A "build/$firmware/diy" 2>/dev/null)" ]; then
           cp -Rf build/$firmware/diy/* ./
 fi
@@ -213,10 +223,10 @@ else
 fi
 make defconfig
 cp -rf .config .config_bf
-if [[ `grep -c "CONFIG_TARGET_x86_64=y" openwrt/.config` -eq '1' ]]; then
+if [[ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]]; then
           TARGET_PROFILE="x86-64"
-elif [[ `grep -c "CONFIG_TARGET.*DEVICE.*=y" openwrt/.config` -eq '1' ]]; then
-          TARGET_PROFILE="$(egrep -o "CONFIG_TARGET.*DEVICE.*=y" openwrt/.config | sed -r 's/.*DEVICE_(.*)=y/\1/')"
+elif [[ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]]; then
+          TARGET_PROFILE="$(egrep -o "CONFIG_TARGET.*DEVICE.*=y" .config | sed -r 's/.*DEVICE_(.*)=y/\1/')"
 else
           TARGET_PROFILE="armvirt"
 fi
