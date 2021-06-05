@@ -168,7 +168,7 @@ echo
 echo
 while :; do
 
-TIME g "是否把定时更新插件编译进固件,要定时更新得把固件上传在github的Releases?"  && read -p " [Y/y确认，N/n否定]： " RELE
+TIME g "是否把定时更新插件编译进固件?"  && read -p " [Y/y确认，N/n否定]： " RELE
 
 case $RELE in
 	[Yy])
@@ -185,8 +185,8 @@ esac
 done
 echo
 echo
-if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-TIME g "请输入Github地址[ 直接回车默认https://github.com/281677160/AutoBuild-OpenWrt ]"  && read -p " 请输入Github地址： " Github
+if [[ "${REG_UPDATE}" == "true" ]]; then
+TIME g "填写[https://github.com/281677160/AutoBuild-OpenWrt]格式Github地址"  && read -p " 请输入Github地址： " Github
 Github=${Github:-"https://github.com/281677160/AutoBuild-OpenWrt"}
 echo
 echo
